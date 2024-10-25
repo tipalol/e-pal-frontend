@@ -66,7 +66,7 @@
               <img src="../assets/Twitch.svg" alt="Twitch" class="w-6 h-6">
             </button>
             <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/Telegram.svg" alt="Telegram" class="w-6 h-6">
+              <img src="../assets/Telegram.svg" alt="Telegram" class="w-10 h-10">
             </button>
           </div>
         </div>
