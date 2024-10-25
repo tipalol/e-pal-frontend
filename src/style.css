@@ -8,7 +8,7 @@
     font-style: normal;
     font-weight: 800;
     font-display: swap;
-    src: url(Bangers-Regular.ttf) format('ttf');
+    src: url(./assets/fonts/Bangers-Regular.ttf) format('truetype');
   }
 }
 
