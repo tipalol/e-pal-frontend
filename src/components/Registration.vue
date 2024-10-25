@@ -2,7 +2,7 @@
   <header class="w-full p-7 flex justify-between items-center fixed z-50">
     <!-- Logo -->
     <div class="flex items-center">
-      <img src="../assets/icons8-google.svg" alt="Logo" class="w-10 h-10">
+      <img src="../assets/mascot%20copy.png" alt="Logo" class="w-10 h-10">
       <h1 class="text-white text-2xl font-bold ml-2">E-PAL</h1>
     </div>
     <!-- Right-side buttons -->
@@ -32,7 +32,7 @@
 
         <!-- Input Form -->
         <form @submit.prevent="submitForm" class="space-y-8 w-full">
-          <div>
+          <div v-if="!showPasswordFields">
             <label for="email" class="sr-only">Phone or Email</label>
             <input
                 v-model="email"
@@ -42,13 +42,44 @@
                 class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:border-purple-400"
             />
           </div>
+          <div v-if="showPasswordFields" class="space-y-6">
+            <!-- Password Field -->
+            <label for="password" class="sr-only">Password</label>
+            <input
+                v-model="password"
+                type="password"
+                id="password"
+                placeholder="Password"
+                class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:border-purple-400"
+            />
+
+            <!-- Confirm Password Field -->
+            <label for="confirmPassword" class="sr-only">Confirm Password</label>
+            <input
+                v-model="confirmPassword"
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm Password"
+                class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:border-purple-400"
+            />
+          </div>
 
           <div class="flex justify-end">
             <button
+                v-if="!showPasswordFields"
                 type="submit"
+                @click="showPasswordFields = true"
                 class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition"
             >
               Next
+            </button>
+            <button
+                v-if="showPasswordFields"
+                type="submit"
+                @click="handleNext()"
+                class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition"
+            >
+              Submit
             </button>
           </div>
         </form>
@@ -77,16 +108,37 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       email: "",
+      password: "",
+      confirmPassword: "",
+      showPasswordFields: false,
     };
   },
   methods: {
-    submitForm() {
-      // Handle form submission logic here
-      alert(`Submitted: ${this.email}`);
+    async handleNext() {
+      if (this.showPasswordFields) {
+        // Handle form submission logic here
+        //alert(`Email: ${this.email}, Password: ${this.password}, Confirm Password: ${this.confirmPassword}`);
+
+        try {
+          const response = await axios.post("http://localhost:5033/api/register", {
+            "email": this.email,
+            "password": this.password,
+          });
+          console.log("Registration successful:", response.data);
+          // Handle successful registration (e.g., redirect or show a success message)
+        } catch (error) {
+          console.error("Error during registration:", error);
+          // Handle registration error (e.g., show an error message)
+        }
+      } else {
+        this.showPasswordFields = true;
+      }
     },
   },
 };
