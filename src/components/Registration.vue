@@ -60,16 +60,13 @@
               <img src="../assets/icons8-google.svg" alt="Google" class="w-6 h-6">
             </button>
             <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/icons8-google.svg" alt="Discord" class="w-6 h-6">
+              <img src="../assets/Discord.svg" alt="Discord" class="w-6 h-6">
             </button>
             <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/icons8-google.svg" alt="Twitch" class="w-6 h-6">
+              <img src="../assets/Twitch.svg" alt="Twitch" class="w-6 h-6">
             </button>
             <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/icons8-google.svg" alt="Facebook" class="w-6 h-6">
-            </button>
-            <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/icons8-google.svg" alt="Apple" class="w-6 h-6">
+              <img src="../assets/Telegram.svg" alt="Telegram" class="w-6 h-6">
             </button>
           </div>
         </div>
