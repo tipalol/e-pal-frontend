@@ -25,8 +25,8 @@
     </div>
 
     <!-- Right Side: Registration Form -->
-    <div class="flex-1 flex justify-center items-center mb-56">
-      <div class="min-w-[418px] max-w-[544px] w-[544px] p-8">
+    <div class="flex-1 flex justify-center items-center mb-[10%]">
+      <div class="min-w-[418px] max-w-[544px] w-[544px]">
         <h2 class="text-4xl font-bold text-white mb-20 text-left">Log in or sign up</h2>
 
         <!-- Input Form -->
