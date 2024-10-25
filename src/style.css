@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'Bangers';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url(Bangers-Regular.ttf) format('ttf');
+  }
+}
+
 body
 {
   background-color: rgb(19, 19, 26);
