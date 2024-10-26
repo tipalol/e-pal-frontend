@@ -17,7 +17,7 @@
     </div>
   </header>
 
-  <div class="flex h-screen">
+  <div class="flex h-screen" v-if="!registrationSuccessful">
     <!-- Left Side: Hero Section -->
     <section class="flex-1 bg-purple-600 flex flex-col justify-center items-center">
       <div class="text-center">
@@ -67,14 +67,14 @@
                   v-if="!showPasswordFields"
                   @click="validateEmail"
                   type="button"
-                  class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition"
+                  class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition mt-5"
               >
                 Next
               </button>
               <button
                   v-if="showPasswordFields"
                   type="submit"
-                  class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition"
+                  class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition mt-5"
               >
                 Submit
               </button>
@@ -85,6 +85,7 @@
             <input
                 v-model="verificationCode"
                 type="text"
+                maxlength="6"
                 id="verificationCode"
                 placeholder="Enter Verification Code"
                 class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:border-purple-400"
@@ -122,6 +123,12 @@
       </div>
     </section>
   </div>
+  <!-- Success Page -->
+  <div v-if="registrationSuccessful" class="flex flex-col items-center justify-center h-screen bg-green-600 text-white">
+    <h2 class="text-4xl font-bold mb-4">Registration Successful!</h2>
+    <p class="text-lg mb-6">Thank you for verifying your email. You can now log in to your account.</p>
+    <button @click="redirectToLogin" class="bg-white text-green-600 py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition">Go to Login</button>
+  </div>
 </template>
 
 <script>
@@ -136,6 +143,7 @@ export default {
       showPasswordFields: false,
       showVerificationPage: false,
       verificationCode: "",
+      registrationSuccessful: false,
       error: null
     };
   },
@@ -176,10 +184,16 @@ export default {
         });
         console.log("Verification successful:", response.data);
         // Proceed to the next step in your application flow
+        this.registrationSuccessful = true;
       } catch (error) {
         this.error = "Invalid verification code. Please try again.";
         console.error("Error during verification:", error);
       }
+    },
+    redirectToLogin() {
+      // Add logic to redirect the user to the login page
+      // For example, this could be:
+      //this.$router.push("/login");
     },
     closeForm() {
       this.email = "";
@@ -188,6 +202,7 @@ export default {
       this.verificationCode = "";
       this.showPasswordFields = false;
       this.showVerificationPage = false;
+      this.registrationSuccessful = false;
       this.error = null;
     }
   },
