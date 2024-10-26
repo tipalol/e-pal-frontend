@@ -28,7 +28,7 @@
 
   <SuccessView v-if="registrationSuccessful"  button-url="#"
                :title="this.getSuccessTitle()"
-                message="Thank you for verifying your email. You can now log in to your account."/>
+               :message="this.getSuccessMessage()"/>
 </template>
 
 <script>
@@ -73,6 +73,15 @@ export default {
       }
       else {
         return "Registration Successful!";
+      }
+    },
+    getSuccessMessage() {
+      if (this.currentStep === "login_success")
+      {
+        return "Login Successful! Now you will be redirected to the main page.";
+      }
+      else {
+        return "Thank you for verifying your email. You can now log in to your account.";
       }
     }
   },

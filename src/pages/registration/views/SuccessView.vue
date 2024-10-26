@@ -4,9 +4,10 @@
     <p class="text-lg mb-6">{{ message }}</p>
     <button
         @click="goToUrl"
-        class="bg-white text-green-600 py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition"
+        type="button"
+        class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition mt-3"
     >
-      Press me
+      Redirect Now
     </button>
   </div>
 </template>

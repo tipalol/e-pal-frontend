@@ -62,6 +62,7 @@ export default {
       confirmPassword: "",
       showPasswordFields: false,
       loginMode: false,
+      userStatus: null,
       error: null,
     };
   },
@@ -83,6 +84,7 @@ export default {
         console.log("Check user status:", response.data);
 
         this.loginMode = response.data.exists;
+        this.userStatus = response.data.status;
 
         console.log("Login mode:", this.loginMode);
         this.showPasswordFields = true;
