@@ -1,30 +1,9 @@
-
 <template>
-  <header class="w-full p-7 flex justify-between items-center fixed z-50 bg-transparent">
-    <!-- Logo -->
-    <div class="flex items-center">
-      <img src="../assets/mascot%20copy.png" alt="Logo" class="w-10 h-10">
-      <h1 class="text-white text-2xl font-bold ml-2">E-PAL</h1>
-    </div>
-    <!-- Right-side buttons -->
-    <div class="flex items-center space-x-4">
-      <button class="bg-purple-500 text-white py-1 px-3 rounded-full hover:bg-purple-600 transition text-sm">Contact Us</button>
-      <button @click="closeForm" class="bg-gray-700 rounded-full text-white font-bold hover:text-purple-300 transition p-1">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-  </header>
+
+  <Header />
 
   <div class="flex h-screen" v-if="!registrationSuccessful">
-    <!-- Left Side: Hero Section -->
-    <section class="flex-1 bg-purple-600 flex flex-col justify-center items-center">
-      <div class="text-center">
-        <img src="../assets/mascot1.svg" alt="Hero Image" class="mx-auto w-80">
-        <h1 class="text-6xl font-bold text-white mt-4">NEVER BATTLE ALONE</h1>
-      </div>
-    </section>
+    <LeftHero />
 
     <!-- Right Side: Registration Form -->
     <section class="flex-1 flex justify-center items-center mb-10">
@@ -102,39 +81,25 @@
           </div>
         </form>
 
-        <!-- Social Logins -->
-        <div class="mt-6">
-          <p class="text-gray-400 text-center mb-4">or continue with</p>
-          <div class="flex justify-between space-x-4">
-            <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/icons8-google.svg" alt="Google" class="w-6 h-6">
-            </button>
-            <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/Discord.svg" alt="Discord" class="w-6 h-6">
-            </button>
-            <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/Twitch.svg" alt="Twitch" class="w-6 h-6">
-            </button>
-            <button class="flex-1 bg-gray-700 py-3 rounded-lg flex items-center justify-center">
-              <img src="../assets/Telegram.svg" alt="Telegram" class="w-10 h-10">
-            </button>
-          </div>
-        </div>
+        <SocialsBlock />
+
       </div>
     </section>
   </div>
-  <!-- Success Page -->
-  <div v-if="registrationSuccessful" class="flex flex-col items-center justify-center h-screen bg-green-600 text-white">
-    <h2 class="text-4xl font-bold mb-4">Registration Successful!</h2>
-    <p class="text-lg mb-6">Thank you for verifying your email. You can now log in to your account.</p>
-    <button @click="redirectToLogin" class="bg-white text-green-600 py-2 px-6 rounded-full font-bold hover:bg-gray-200 transition">Go to Login</button>
-  </div>
+
+  <SuccessView v-if="registrationSuccessful" />
+
 </template>
 
 <script>
 import axios from "axios";
+import Header from "./views/Header.vue";
+import SocialsBlock from "./views/SocialsBlock.vue";
+import SuccessView from "./views/SuccessView.vue";
+import LeftHero from "./views/LeftHero.vue";
 
 export default {
+  components: {LeftHero, SuccessView, SocialsBlock, Header},
   data() {
     return {
       email: "",
