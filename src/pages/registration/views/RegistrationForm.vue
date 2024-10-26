@@ -102,6 +102,12 @@ export default {
               login: this.localEmail,
               password: this.password,
             });
+            if (this.userStatus === "Created")
+            {
+              console.log("Logged in, verification continue:", response.data);
+              this.$emit("registration-success");
+              return;
+            }
             console.log("Login successful:", response.data);
             this.$emit("login-success");
           } catch (error) {
