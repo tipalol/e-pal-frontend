@@ -3,15 +3,16 @@
     <input
         v-model="verificationCode"
         type="text"
-        maxlength="6"
+        maxlength="5"
         id="verificationCode"
         placeholder="Enter Verification Code"
         class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:border-purple-400"
     />
     <div class="flex justify-end mt-6">
       <button
+          :disabled="verificationCode.length < 5"
           type="submit"
-          class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition"
+          class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition disabled:bg-gray-600"
       >
         Verify
       </button>
