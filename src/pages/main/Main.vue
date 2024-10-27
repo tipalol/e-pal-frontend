@@ -11,7 +11,7 @@
       <!-- Service Cards -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <div v-for="service in services" :key="service.name" class="bg-gray-800 rounded-lg text-center">
-          <img :src="service.image" :alt="service.name" class="h-40 w-full object-cover rounded-lg mb-4" />
+          <img :src="service.image" :alt="service.name" class="h-96 w-full object-cover bg-cover rounded-lg mb-4" />
         </div>
       </div>
     </section>

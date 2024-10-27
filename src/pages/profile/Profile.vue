@@ -32,23 +32,30 @@ import ProfileBanner from "./components/Banner.vue";
 import ProfileServices from "./components/ProfileServices.vue";
 import ServiceDetails from "./components/ServiceDetails.vue";
 import ProfileActions from "./components/ProfileActions.vue";
+import {useAuthStore} from "../../stores/auth.js";
 
 export default {
   name: "UserProfile",
   components: {ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
   setup() {
     const profile = ref({
+      id: "4363236",
       username: "dopameanie",
+      status: "Created",
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
     });
 
     onMounted(async () => {
       try {
-        const response = await fetch("http://localhost/api/profile");
+        const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
+        const response = await fetch("http://localhost:5033/api/profile", { headers });
         if (response.ok) {
           const data = await response.json();
-          profile.value = data;
+
+          profile.value = data.data;
+
+          console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
         } else {
           console.error("Failed to fetch profile data");
         }
