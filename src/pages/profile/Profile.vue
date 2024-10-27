@@ -1,96 +1,89 @@
 <template>
-  <div class="min-h-screen bg-gray-900 text-white font-sans">
+  <div class="min-h-screen bg-gray-900 text-white">
     <!-- Header Section -->
-    <header class="bg-purple-800 py-4 px-6 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <img src="./assets/avatar.jpg" alt="User Avatar" class="w-12 h-12 rounded-full" />
-        <div>
-          <h1 class="text-xl font-bold">Valyra</h1>
-          <p class="text-sm text-gray-300">Deutsch/English</p>
-        </div>
+    <header class="bg-gradient-to-r from-purple-800 to-purple-700 py-6 px-8 flex items-center justify-between relative">
+      <div class="flex items-center space-x-4">
+        <img src="../registration/assets/logo.png" alt="E-PAL Logo" class="w-12 h-12" />
+        <nav class="space-x-6 hidden lg:flex">
+          <a href="#" class="text-gray-200 hover:text-white">Play</a>
+          <a href="#" class="text-gray-200 hover:text-white">ePals</a>
+          <a href="#" class="text-gray-200 hover:text-white">Community</a>
+          <a href="#" class="text-gray-200 hover:text-white">App</a>
+        </nav>
       </div>
-      <div class="flex items-center space-x-2 text-sm">
-        <span class="bg-green-500 rounded-full w-3 h-3"></span>
-        <span>Online</span>
-        <span class="text-gray-400">•</span>
-        <span>ePal 2</span>
+      <div class="flex items-center space-x-4">
+        <button class="text-sm bg-purple-600 py-1 px-4 rounded-full text-white">Become an ePal</button>
+        <button class="text-sm text-white">Log In</button>
+        <button class="text-sm bg-purple-500 py-1 px-4 rounded-full text-white">Sign Up</button>
       </div>
     </header>
 
+    <!-- Profile Banner Section -->
+    <section class="bg-gray-800 py-8 px-8 text-center relative">
+      <div class="flex flex-col items-center space-y-4">
+        <img src="./assets/avatar.webp" alt="User Avatar" class="w-24 h-24 rounded-full" />
+        <h1 class="text-2xl font-bold">dopameanie</h1>
+        <p class="text-gray-400 text-sm">@dopameanie • 日本語/English</p>
+        <div class="flex items-center space-x-2 text-sm">
+          <span class="text-green-400">Online</span>
+          <span class="text-yellow-500">VIP</span>
+          <span class="text-purple-400">estar 2</span>
+        </div>
+        <div class="flex justify-center space-x-6 mt-4">
+          <a href="#" class="text-white">Achievements</a>
+          <a href="#" class="text-white border-b-2 border-purple-500">Services</a>
+          <a href="#" class="text-white">Album</a>
+          <a href="#" class="text-white">Wish</a>
+          <a href="#" class="text-white">Feeds</a>
+        </div>
+        <button class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white">Subscribe: 20% Off</button>
+      </div>
+    </section>
+
     <!-- Main Content Section -->
-    <div class="flex space-x-6 px-6 py-4">
-      <!-- Sidebar -->
+    <div class="flex space-x-8 px-8 py-6">
+      <!-- Sidebar Services List -->
       <aside class="w-1/4 space-y-6">
-        <nav class="space-y-4">
-          <div class="bg-gray-800 p-4 rounded-lg">
-            <h2 class="text-sm font-bold">Like Service</h2>
-            <button class="text-purple-500 mt-2">Bestellung kostenlos</button>
+        <div v-for="(service, index) in services" :key="index" class="bg-gray-800 p-4 rounded-lg flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <img :src="service.icon" :alt="service.name" class="w-10 h-10 rounded-full" />
+            <div>
+              <h3 class="text-sm font-bold">{{ service.name }}</h3>
+              <p class="text-gray-400 text-xs">{{ service.price }}</p>
+            </div>
           </div>
-
-          <div class="bg-gray-800 p-4 rounded-lg space-y-2">
-            <h2 class="text-sm font-bold">Counter-Strike 2</h2>
-            <p class="text-gray-400 text-xs">€2.00/Spiel</p>
-          </div>
-
-          <div class="bg-gray-800 p-4 rounded-lg space-y-2">
-            <h2 class="text-sm font-bold">Minecraft</h2>
-            <p class="text-gray-400 text-xs">€4.00/Stunde</p>
-          </div>
-
-          <div class="bg-gray-800 p-4 rounded-lg space-y-2">
-            <h2 class="text-sm font-bold">E-Chat</h2>
-            <p class="text-gray-400 text-xs">€5.00/30 Min.</p>
-          </div>
-        </nav>
+        </div>
       </aside>
 
-      <!-- Main Profile Content -->
+      <!-- Main Service Detail Content -->
       <section class="w-2/4 space-y-6">
-        <!-- Game Card -->
         <div class="bg-gray-800 p-6 rounded-lg">
-          <h2 class="text-lg font-semibold">Counter-Strike 2</h2>
-          <div class="mt-4">
-            <img src="./assets/hero_banner.webp" alt="Counter-Strike" class="w-full rounded-lg" />
-          </div>
+          <h2 class="text-lg font-semibold">E-Chat</h2>
+          <p class="text-yellow-500 text-sm">5.0 • 1759 Served</p>
           <p class="mt-4 text-gray-400 text-sm">
-            Ready to level up your CS2 experience? Let's team up and dominate the virtual battlefield together!
-            🌟 Preferring Duo-Queue!
+            Indulge in a personal voice call or texting session on Discord with dopa
           </p>
-          <div class="flex items-center space-x-2 mt-4 text-sm">
-            <span class="text-gray-500">Rang</span>
-            <span class="text-white">Silver</span>
-            <span class="text-gray-500">•</span>
-            <span class="text-white">Europe/EU West</span>
-          </div>
+          <p class="text-sm text-gray-400">Styles: Talkative</p>
         </div>
 
         <!-- Service Types -->
         <div class="bg-gray-800 p-6 rounded-lg space-y-4">
-          <h3 class="text-lg font-semibold">Dienstarten - 3</h3>
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span>Duo Queue MM</span>
-              <span class="text-purple-500">€3.00/Spiel</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span>Wingman</span>
-              <span class="text-purple-500">€2.00/Spiel</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span>Group-Queue MM</span>
-              <span class="text-purple-500">€7.00/Spiel</span>
-            </div>
+          <h3 class="text-lg font-semibold">Service Types • 4</h3>
+          <div v-for="(type, index) in serviceTypes" :key="index" class="flex items-center justify-between bg-gray-700 p-3 rounded-md">
+            <span>{{ type.name }}</span>
+            <span class="text-purple-500">{{ type.price }}</span>
           </div>
         </div>
       </section>
 
-      <!-- Profile Settings Section -->
+      <!-- User Profile Actions -->
       <aside class="w-1/4 space-y-6">
         <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center">
-          <img src="./assets/avatar.jpg" alt="User Profile" class="w-24 h-24 rounded-full mb-4" />
-          <button class="bg-purple-600 py-2 px-4 rounded-full text-sm">Dienste-Einstellungen</button>
+          <img src="./assets/avatar.webp" alt="User Profile" class="w-24 h-24 rounded-full mb-4" />
+          <button class="bg-purple-600 py-2 px-4 rounded-full text-sm">Chat</button>
+          <button class="bg-purple-500 py-2 px-4 rounded-full text-sm mt-2">Order</button>
           <p class="mt-2 text-gray-400 text-xs text-center">
-            Durchschnittl. IM Reaktionszeit 5-10 Minuten
+            Avg. IM Response Time ≤ 5 mins
           </p>
         </div>
       </aside>
@@ -101,9 +94,25 @@
 <script>
 export default {
   name: "UserProfile",
+  data() {
+    return {
+      services: [
+        { name: "Adding Socials", price: "66.66 / Time", icon: "https://static-oss.epal.gg/data/static/v3/img7_card_AddingSocials_m.png" },
+        { name: "E-Chat", price: "66.66 / Time", icon: "https://static-oss.epal.gg/data/static/v3/img7_card_E-Chat_m.png" },
+        { name: "Dead by Daylight", price: "6.66 / Game", icon: "https://static-oss.epal.gg/data/static/v2/img7_v2_card_DeadbyDaylight_m.png" },
+        // Add more services as needed
+      ],
+      serviceTypes: [
+        { name: "text chat w dopa", price: "66.66 / Time" },
+        { name: "voice call w dopa", price: "66.66 / 15Min" },
+        { name: "asmr sleep call w dopa", price: "666.66 / 15Min" },
+        { name: "daily dose of dopa", price: "76.66 / Time" },
+      ],
+    };
+  },
 };
 </script>
 
 <style scoped>
-/* Custom styles if needed */
+/* Additional styling if needed */
 </style>
