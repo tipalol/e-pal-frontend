@@ -1,18 +1,18 @@
 <template>
-  <header class="bg-gradient-to-r from-purple-800 to-purple-700 py-6 px-8 flex items-center justify-between relative">
+  <header class="flex justify-between items-center p-4">
     <div class="flex items-center space-x-4">
-      <img src="./assets/logo.png" alt="E-PAL Logo" class="w-12 h-12" />
-      <nav class="space-x-6 hidden lg:flex">
-        <a href="#" class="text-gray-200 hover:text-white">Play</a>
-        <a href="#" class="text-gray-200 hover:text-white">ePals</a>
-        <a href="#" class="text-gray-200 hover:text-white">Community</a>
-        <a href="#" class="text-gray-200 hover:text-white">App</a>
+      <img src="./assets/logo.png" alt="E-Pal Logo" class="h-8" />
+      <nav class="hidden md:flex space-x-4">
+        <a href="#" class="text-gray-300 hover:text-white">Play</a>
+        <a href="#" class="text-gray-300 hover:text-white">ePals</a>
+        <a href="#" class="text-gray-300 hover:text-white">Community</a>
+        <a href="#" class="text-gray-300 hover:text-white">App</a>
       </nav>
     </div>
     <div class="flex items-center space-x-4">
-      <button class="text-sm bg-purple-600 py-1 px-4 rounded-full text-white">Become an ePal</button>
-      <button class="text-sm text-white">Log In</button>
-      <button class="text-sm bg-purple-500 py-1 px-4 rounded-full text-white">Sign Up</button>
+      <button class="bg-gray-700 px-4 py-2 rounded-lg">Become an ePal</button>
+      <router-link class="text-gray-300 hover:text-white" to="/registration">Log in</router-link>
+      <router-link class="bg-purple-500 px-4 py-2 rounded-lg" to="/registration">Sign Up</router-link>
     </div>
   </header>
 </template>
