@@ -105,11 +105,12 @@ export default {
             if (this.userStatus === "Created")
             {
               console.log("Logged in, verification continue:", response.data);
+
               this.$emit("registration-success");
               return;
             }
             console.log("Login successful:", response.data);
-            this.$emit("login-success");
+            this.$emit("login-success", response.data);
           } catch (error) {
             this.error = "Error during login. Please try again.";
             console.error("Error during login:", error);

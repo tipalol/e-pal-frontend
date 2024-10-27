@@ -38,7 +38,7 @@ export default {
       try {
         const response = await axios.post("http://localhost:5033/api/register/confirm", {
           email: this.email,
-          code: this.verificationCode,
+          verificationCode: this.verificationCode,
         });
         if (response.data)
         {

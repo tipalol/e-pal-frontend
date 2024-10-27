@@ -38,6 +38,7 @@ import SuccessView from "./views/SuccessView.vue";
 import LeftHero from "./views/LeftHero.vue";
 import RegistrationForm from "./views/RegistrationForm.vue";
 import VerificationPage from "./views/VerificationPage.vue";
+import { useAuthStore } from '../../stores/auth.js';
 
 export default {
   components: {
@@ -62,28 +63,22 @@ export default {
     handleVerificationSuccess() {
       this.registrationSuccessful = true;
     },
-    handleLoginSuccess() {
+    handleLoginSuccess(token) {
       this.currentStep = "login_success";
       this.registrationSuccessful = true;
+      const authStore = useAuthStore();
+      authStore.setToken(token);
     },
     getSuccessTitle() {
-      if (this.currentStep === "login_success")
-      {
-        return "Login Successful!";
-      }
-      else {
-        return "Registration Successful!";
-      }
+      return this.currentStep === "login_success"
+          ? "Login Successful!"
+          : "Registration Successful!";
     },
     getSuccessMessage() {
-      if (this.currentStep === "login_success")
-      {
-        return "Login Successful! Now you will be redirected to the main page.";
-      }
-      else {
-        return "Thank you for verifying your email. You can now log in to your account.";
-      }
-    }
+      return this.currentStep === "login_success"
+          ? "Login Successful! Now you will be redirected to the main page."
+          : "Thank you for verifying your email. You can now log in to your account.";
+    },
   },
 };
 </script>
