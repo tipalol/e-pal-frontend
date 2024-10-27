@@ -68,6 +68,7 @@ export default {
       this.registrationSuccessful = true;
       const authStore = useAuthStore();
       authStore.setToken(token);
+      localStorage.setItem('authToken', data.token);
     },
     getSuccessTitle() {
       return this.currentStep === "login_success"
