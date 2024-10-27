@@ -1,12 +1,9 @@
-<script setup>
-import Registration from "./pages/registration/Registration.vue";
+<script>
+export default {
+  name: 'App',
+};
 </script>
 
 <template>
-  <Registration />
-
+  <router-view />
 </template>
-
-<style scoped>
-
-</style>
