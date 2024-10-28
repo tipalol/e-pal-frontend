@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Header v-if="!this.registrationSuccessful"/>
 
   <div class="flex h-screen" v-if="!registrationSuccessful">
     <LeftHero />
@@ -27,7 +27,7 @@
   </div>
 
   <CreateUsername v-if="registrationSuccessful && !usernameChosen" @username-chosen="handleUsernameChoose"/>
-  <SuccessView v-if="registrationSuccessful && usernameChosen"  button-url="#"
+  <SuccessView v-if="registrationSuccessful && usernameChosen"  button-url="/"
                :title="this.getSuccessTitle()"
                :message="this.getSuccessMessage()"/>
 </template>
@@ -61,8 +61,10 @@ export default {
     };
   },
   methods: {
-    handleRegistrationSuccess() {
+    handleRegistrationSuccess(token) {
       this.currentStep = "verification";
+      const authStore = useAuthStore();
+      authStore.setToken(token);
     },
     handleVerificationSuccess() {
       this.registrationSuccessful = true;
@@ -70,12 +72,14 @@ export default {
     handleLoginSuccess(token) {
       this.currentStep = "login_success";
       this.registrationSuccessful = true;
+      this.usernameChosen = true;
       const authStore = useAuthStore();
       authStore.setToken(token);
     },
     handleUsernameChoose() {
       console.log("Username choose success")
       this.usernameChosen = true;
+      this.$router.push('/');
     },
     getSuccessTitle() {
       return this.currentStep === "login_success"

@@ -106,7 +106,7 @@ export default {
             {
               console.log("Logged in, verification continue:", response.data);
 
-              this.$emit("registration-success");
+              this.$emit("registration-success", response.data);
               return;
             }
             console.log("Login successful:", response.data);
@@ -124,7 +124,7 @@ export default {
             password: this.password,
           });
           console.log("Registration successful:", response.data);
-          this.$emit("registration-success");
+          this.$emit("registration-success", response.data);
         } catch (error) {
           this.error = "Error during registration. Please try again.";
           console.error("Error during registration:", error);

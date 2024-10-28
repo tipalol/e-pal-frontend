@@ -35,7 +35,7 @@ export default {
   name: "Header",
   setup() {
     const profile = ref({
-      username: "tipalol",
+      username: "",
       avatar: ""
     });
     const token = ref({
@@ -50,6 +50,28 @@ export default {
       {
         profile.value.username = useAuthStore().profile.username;
         profile.value.avatar = useAuthStore().profile.avatar;
+      }
+      else
+      {
+        try {
+          const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
+          const response = await fetch("http://localhost:5033/api/profile", { headers });
+          if (response.ok) {
+            const data = await response.json();
+
+            profile.value = data.data;
+            useAuthStore().setProfile(profile.value);
+
+            profile.value.username = useAuthStore().profile.username;
+            profile.value.avatar = useAuthStore().profile.avatar;
+
+            console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
+          } else {
+            console.error("Failed to fetch profile data");
+          }
+        } catch (error) {
+            console.error("Error fetching profile data:", error);
+        }
       }
     });
 
