@@ -9,6 +9,14 @@
           placeholder="Username"
           class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:border-purple-400"
       />
+      <select
+          v-model="selectedGender"
+          class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring focus:border-purple-400 mt-2"
+      >
+        <option value=null></option>
+        <option value="Woman">Woman</option>
+        <option value="Man">Man</option>
+      </select>
     </div>
       <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
     <div class="flex justify-end">
@@ -31,8 +39,10 @@ import {useRouter} from "vue-router";
 export default {
   name: "ProfileSettings",
   data() {
+    console.log(useAuthStore().profile)
     return {
-      username: "",
+      username: useAuthStore().profile.username,
+      selectedGender: useAuthStore().profile.gender,
       error: ""
     }
   },
@@ -44,6 +54,7 @@ export default {
       };
       const response = await axios.post("http://localhost:5033/api/profile", {
         username: this.username,
+        gender: this.selectedGender,
       }, config);
 
       if (response.data)
