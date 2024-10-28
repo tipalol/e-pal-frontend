@@ -12,9 +12,9 @@
         <a href="#" class="text-white">Wish</a>
         <a href="#" class="text-white">Feeds</a>
       </div>
-      <button class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white">
-        Subscribe: 20% Off
-      </button>
+      <router-link class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white" to="/profile/settings">
+        Edit Profile
+      </router-link>
     </div>
   </section>
 </template>
