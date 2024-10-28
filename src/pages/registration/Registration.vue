@@ -26,7 +26,8 @@
     </section>
   </div>
 
-  <SuccessView v-if="registrationSuccessful"  button-url="#"
+  <CreateUsername v-if="registrationSuccessful && !usernameChosen" @username-chosen="handleUsernameChoose"/>
+  <SuccessView v-if="registrationSuccessful && usernameChosen"  button-url="#"
                :title="this.getSuccessTitle()"
                :message="this.getSuccessMessage()"/>
 </template>
@@ -39,9 +40,11 @@ import LeftHero from "./views/LeftHero.vue";
 import RegistrationForm from "./views/RegistrationForm.vue";
 import VerificationPage from "./views/VerificationPage.vue";
 import { useAuthStore } from '../../stores/auth.js';
+import CreateUsername from "./views/CreateUsername.vue";
 
 export default {
   components: {
+    CreateUsername,
     Header,
     LeftHero,
     SocialsBlock,
@@ -53,6 +56,7 @@ export default {
     return {
       email: "",
       registrationSuccessful: false,
+      usernameChosen: false,
       currentStep: "registration",
     };
   },
@@ -68,6 +72,10 @@ export default {
       this.registrationSuccessful = true;
       const authStore = useAuthStore();
       authStore.setToken(token);
+    },
+    handleUsernameChoose() {
+      console.log("Username choose success")
+      this.usernameChosen = true;
     },
     getSuccessTitle() {
       return this.currentStep === "login_success"
