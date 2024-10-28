@@ -1,7 +1,7 @@
 <template>
   <header class="flex justify-between items-center p-4">
     <div class="flex items-center space-x-4">
-      <img src="./assets/logo.png" alt="E-Pal Logo" class="h-8" />
+      <router-link to="/"><img src="./assets/logo.png" alt="E-Pal Logo" class="h-8" /></router-link>
       <nav class="hidden md:flex space-x-4">
         <a href="#" class="text-gray-300 hover:text-white">Play</a>
         <router-link href="#" class="text-gray-300 hover:text-white" to="/">ePals</router-link>
