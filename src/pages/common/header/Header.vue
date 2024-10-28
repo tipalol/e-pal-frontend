@@ -10,19 +10,19 @@
       </nav>
     </div>
     <div v-if="!token || !token.jwt" class="flex items-center space-x-4">
-      <button class="bg-gray-700 px-4 py-2 rounded-lg">Become an ePal</button>
-      <router-link class="text-gray-300 hover:text-white" to="/registration">Log in</router-link>
-      <router-link class="bg-purple-500 px-4 py-2 rounded-lg" to="/registration">Sign Up</router-link>
+      <router-link class="font-semibold text-gray-300 bg-gray-700 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
+      <router-link class="font-semibold text-gray-300 hover:text-white" to="/registration">Log in</router-link>
+      <router-link class="font-semibold bg-purple-500 text-gray-300 px-4 py-2 rounded-lg" to="/registration">Sign Up</router-link>
     </div>
     <div v-else class="flex items-center space-x-4">
-      <button class="bg-gray-700 px-4 py-2 rounded-lg">Become an ePal</button>
-      <router-link class="" to="/profile">
-      <p>@{{profile.username}}</p>
+      <router-link class="font-semibold bg-gray-700 text-gray-300 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
+      <router-link to="/profile">
+      <p class="font-semibold text-gray-300 hover:text-white">@{{profile.username}}</p>
       </router-link>
-      <router-link class="" to="/profile">
+      <router-link to="/profile">
         <img :src="profile.avatar" alt="User Avatar" class="w-[24px] h-[24px] rounded-full" />
       </router-link>
-      <button @click="logOut" class="bg-purple-500 px-4 py-2 rounded-lg">Log out</button>
+      <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
     </div>
   </header>
 </template>
