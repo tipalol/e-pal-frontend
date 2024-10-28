@@ -34,12 +34,10 @@
 <script>
 import {useAuthStore} from "../../../stores/auth.js";
 import axios from "axios";
-import {useRouter} from "vue-router";
 
 export default {
   name: "ProfileSettings",
   data() {
-    console.log(useAuthStore().profile)
     return {
       username: useAuthStore().profile.username,
       selectedGender: useAuthStore().profile.gender,

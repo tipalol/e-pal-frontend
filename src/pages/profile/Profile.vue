@@ -45,10 +45,26 @@ export default {
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
     });
+    const serviceTypes = ref([
+      {
+        id: "",
+        name: "",
+        avatar: ""
+      }
+    ]);
+    const services = ref([
+      {
+        id: "",
+        name: "",
+        avatar: "",
+        price: 100.5,
+        serviceTypeId: ""
+      }
+    ]);
 
     onMounted(async () => {
+      const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
       try {
-        const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
         const response = await fetch("http://localhost:5033/api/profile", { headers });
         if (response.ok) {
           const data = await response.json();
@@ -62,6 +78,36 @@ export default {
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
+      }
+
+      try {
+        const response = await fetch("http://localhost:5033/api/services/"+ profile.value.id + "/categories", { headers });
+        if (response.ok) {
+          const data = await response.json();
+
+          serviceTypes.value = data.data;
+
+          console.log('Got service types: ' + serviceTypes.value[0].id);
+        } else {
+          console.error("Failed to fetch service types");
+        }
+      } catch (error) {
+        console.error("Error fetching service types:", error);
+      }
+
+      try {
+        const response = await fetch("http://localhost:5033/api/services/"+ profile.value.id + "/category/" + serviceTypes.value[0].id, { headers });
+        if (response.ok) {
+          const data = await response.json();
+
+          services.value = data.data;
+
+          console.log('Got services: ' + services.value[0].name);
+        } else {
+          console.error("Failed to fetch services");
+        }
+      } catch (error) {
+        console.error("Error fetching services:", error);
       }
     });
 
