@@ -1,7 +1,7 @@
 <template>
   <header class="w-full p-7 flex justify-between items-center fixed z-50 bg-transparent">
     <!-- Logo -->
-    <div class="flex items-center">
+    <div class="flex items-center" @click="goToHome">
       <img src="../assets/logo.png" alt="Logo" class="w-10 h-10">
       <h1 class="text-white text-2xl font-bold ml-2">E-PAL</h1>
     </div>
@@ -16,3 +16,9 @@
     </div>
   </header>
 </template>
+
+<script>
+import { useRouter } from 'vue-router';
+
+
+</script>

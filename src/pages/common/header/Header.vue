@@ -1,7 +1,9 @@
 <template>
-  <header class="flex justify-between items-center p-4">
-    <div class="flex items-center space-x-4">
-      <img src="./assets/logo.png" alt="E-Pal Logo" class="h-8" />
+  <header class="flex justify-between items-center p-2">
+    <div class="w-[4rem]">
+      <img src="./assets/logo.png" alt="E-Pal Logo" class="h-12 cursor-pointer" @click="goToHome"/>
+    </div>
+    <div class="flex items-center" style="margin-right: auto">
       <nav class="hidden md:flex space-x-4">
         <a href="#" class="text-gray-300 hover:text-white">Play</a>
         <router-link href="#" class="text-gray-300 hover:text-white" to="/">ePals</router-link>
@@ -30,10 +32,12 @@
 <script>
 import {useAuthStore} from "../../../stores/auth.js";
 import {onMounted, ref} from "vue";
+import {useRouter} from "vue-router"; // Импортируйте useRouter
 
 export default {
   name: "Header",
   setup() {
+    const router = useRouter();
     const profile = ref({
       username: "tipalol",
       avatar: ""
@@ -41,7 +45,9 @@ export default {
     const token = ref({
       jwt: "None"
     });
-
+    const goToHome = () => {
+      router.push('/'); // Переход на корневой путь
+    }
     onMounted(async () => {
       token.value.jwt = useAuthStore().token;
       console.log('Token: ' + token.value.jwt)
@@ -53,7 +59,7 @@ export default {
       }
     });
 
-    return { profile, token };
+    return { profile, token, goToHome };
   },
   methods: {
     logOut() {
