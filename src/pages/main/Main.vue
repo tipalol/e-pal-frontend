@@ -5,13 +5,13 @@
     <Banner />
 
     <!-- Catalog Section -->
-    <section class="p-8">
+    <section class="p-8 mx-auto">
       <h2 class="text-2xl font-bold mb-6">All Services</h2>
 
       <!-- Service Cards -->
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <div v-for="service in services" :key="service.name" class="bg-gray-800 rounded-lg text-center">
-          <img :src="service.image" :alt="service.name" class="h-96 w-full object-cover bg-cover rounded-lg mb-4" />
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-1">
+        <div v-for="service in services" :key="service.name" class="bg-gray-800 rounded-lg h-[273px] w-[210px] ">
+          <img :src="service.image" :alt="service.name" class="object-cover bg-cover rounded-lg mb-4" />
         </div>
       </div>
     </section>
@@ -29,10 +29,10 @@ export default {
       services: [
         { name: "Make Friends", image: "https://static-oss.epal.gg/data/static/v3/img10_MakeFriends.png" },
         { name: "E-Chat", image: "https://static-oss.epal.gg/data/static/v4/img10_E_Chat.png" },
-        { name: "Valorant", image: "valorant.png" },
-        { name: "League of Legends", image: "lol.png" },
-        { name: "Movie", image: "movie.png" },
-        { name: "Fortnite", image: "fortnite.png" },
+        { name: "Valorant", image: "https://static-oss.epal.gg/data/static/v2/img10_v2_Valorant.png" },
+        { name: "League of Legends", image: "https://static-oss.epal.gg/data/static/v2/img10_v2_LeagueofLegends.png" },
+        { name: "Movie", image: "https://static-oss.epal.gg/data/static/v3/img10_Movie.png" },
+        { name: "Fortnite", image: "https://static-oss.epal.gg/data/static/v2/img10_v2_Fortnite.png" },
       ],
     };
   },

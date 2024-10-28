@@ -16,7 +16,12 @@
     </div>
     <div v-else class="flex items-center space-x-4">
       <button class="bg-gray-700 px-4 py-2 rounded-lg">Become an ePal</button>
-      <router-link class="text-gray-300 hover:text-white" to="/profile">Profile</router-link>
+      <router-link class="" to="/profile">
+      <p>@{{profile.username}}</p>
+      </router-link>
+      <router-link class="" to="/profile">
+        <img :src="profile.avatar" alt="User Avatar" class="w-[24px] h-[24px] rounded-full" />
+      </router-link>
       <button @click="logOut" class="bg-purple-500 px-4 py-2 rounded-lg">Log out</button>
     </div>
   </header>
@@ -30,7 +35,8 @@ export default {
   name: "Header",
   setup() {
     const profile = ref({
-      username: "tipalol"
+      username: "tipalol",
+      avatar: ""
     });
     const token = ref({
       jwt: "None"
@@ -39,6 +45,12 @@ export default {
     onMounted(async () => {
       token.value.jwt = useAuthStore().token;
       console.log('Token: ' + token.value.jwt)
+
+      if (useAuthStore().profile)
+      {
+        profile.value.username = useAuthStore().profile.username;
+        profile.value.avatar = useAuthStore().profile.avatar;
+      }
     });
 
     return { profile, token };

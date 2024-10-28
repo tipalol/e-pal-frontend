@@ -54,6 +54,7 @@ export default {
           const data = await response.json();
 
           profile.value = data.data;
+          useAuthStore().setProfile(profile.value);
 
           console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
         } else {
