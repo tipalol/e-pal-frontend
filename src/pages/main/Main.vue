@@ -13,9 +13,10 @@ import Header from "../common/header/Header.vue";
 import Banner from "./components/Banner.vue";
 import MainServices from "./components/MainServices.vue";
 import axios from "axios";
+import EpalsCatalog from "../catalog/EpalsCatalog.vue";
 
 export default {
-  components: {MainServices, Banner, Header},
+  components: {EpalsCatalog, MainServices, Banner, Header},
   data() {
     return {
       services: [],

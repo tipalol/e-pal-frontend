@@ -5,7 +5,11 @@
     <!-- Service Cards -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-1">
       <div v-for="service in services" :key="service.name" class="bg-gray-800 rounded-lg h-[273px] w-[210px]">
-        <img :src="service.avatar" :alt="service.name" class="object-cover bg-cover rounded-lg mb-4" />
+        <img @click="handleServiceClick(service.id)"
+             class="object-cover bg-cover rounded-lg mb-4 cursor-pointer hover:scale-110"
+             :src="service.avatar"
+             :alt="service.name"
+        />
       </div>
     </div>
   </section>
@@ -19,9 +23,10 @@ export default {
       required: true,
     },
   },
+  methods: {
+    handleServiceClick(id) {
+      this.$router.push("/catalog/" + id);
+    }
+  }
 };
 </script>
-
-<style scoped>
-/* Add styles if needed */
-</style>
