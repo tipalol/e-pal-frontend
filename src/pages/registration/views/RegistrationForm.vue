@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="space-y-8 w-full">
+  <div class="space-y-8 w-full">
     <div v-if="!showPasswordFields">
       <input
           v-model="localEmail"
@@ -39,13 +39,14 @@
       </button>
       <button
           v-if="showPasswordFields"
-          type="submit"
+          @click="handleSubmit"
+          type="button"
           class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition mt-3"
       >
         Submit
       </button>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -75,7 +76,12 @@ export default {
     async validateEmail() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.localEmail)) {
-        this.error = "Please enter a valid email address.";
+        //this.error = "Please enter a valid email address.";
+
+        this.loginMode = true;
+        console.log("Login mode:", this.loginMode);
+        this.showPasswordFields = true;
+
       } else {
         this.error = null;
 
