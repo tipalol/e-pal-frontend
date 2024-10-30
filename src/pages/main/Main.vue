@@ -33,7 +33,7 @@ export default {
     async fetchServices() {
       try {
         const response = await axios.get("http://localhost:5033/api/Catalog/serviceTypes?take=6");
-        this.services = response.data;
+        this.services = response.data.data;
       } catch (error) {
         console.error("Error fetching services:", error);
       }
