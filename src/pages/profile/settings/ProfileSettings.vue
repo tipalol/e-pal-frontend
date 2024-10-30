@@ -3,7 +3,7 @@
     <div class="font-bold space-y-8 max-w-screen-lg"> <!-- Внутренний контейнер для всех элементов -->
 
       <!-- Заголовок -->
-      <div class="text-left">
+      <div class="ml-2 text-left">
         <h2 class="text-4xl font-bold text-white mb-10">Edit Profile</h2>
       </div>
 
@@ -57,24 +57,34 @@
               />
             </div>
           </div>
-            
+
+          <div class="flex flex-col mt-10">
           <!-- Кнопка сохранения профиля -->
-          <div class="flex justify-center mt-10">
+            <div>
               <button
                   @click="saveProfile()"
                   type="button"
-                  class="w-44 bg-purple-500 text-white py-3 rounded-full font-bold text-xl hover:bg-purple-600 transition">
+                  class="w-56 mb-2 bg-purple-500 text-white py-3 rounded-full font-bold text-xl hover:bg-purple-600 transition">
                 Save
               </button>
             </div>
+            <!-- Кнопка отмены -->
+
+            <div class="flex justify-center">
+              <router-link to="/profile">
+              <button
+                  type="button"
+                  class="w-44 bg-red-500 text-white py-3 rounded-full font-bold text-xl hover:bg-red-600 transition">
+                Cancel
+              </button>
+              </router-link>
+            </div>
+
+          </div>
           <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
         </form>
         </div>
       </div>
-
-
-
-
     </div>
   </div>
 </template>
