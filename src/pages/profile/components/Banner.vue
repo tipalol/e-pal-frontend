@@ -1,9 +1,10 @@
-<!-- UserBanner.vue -->
 <template>
   <section class="bg-gray-800 py-8 px-8 text-center relative">
-    <div class="flex flex-col items-center space-y-4">
-      <img :src="avatar" alt="User Avatar" class="w-24 h-24 rounded-full" />
-      <h1 class="text-2xl font-bold">{{ username }}</h1>
+    <div class="flex flex-col items-center space-y-3 font-bold">
+      <img :src="avatar" alt="User Avatar" class="w-36 h-36 rounded-full" />
+      <h1 class="text-2xl">{{ username }}</h1>
+      <!-- Используем динамическое свойство для цвета текста -->
+      <p :style="{ color: genderTextColor }" class="text-sm text-xl">{{ gender }}</p>
       <p class="text-gray-400 text-sm">{{ languages }}</p>
       <div class="flex justify-center space-x-6 mt-4">
         <a href="#" class="text-white">Achievements</a>
@@ -18,8 +19,9 @@
     </div>
   </section>
 </template>
-
 <script>
+import { computed } from "vue";
+
 export default {
   name: "ProfileBanner",
   props: {
@@ -35,6 +37,19 @@ export default {
       type: String,
       required: true,
     },
+    gender: {
+      type: String,
+      default: "--",
+      required: false,
+    },
+  },
+  setup(props) {
+    // Определяем цвет текста в зависимости от пола
+    const genderTextColor = computed(() => {
+      return props.gender === "Woman" ? "#ff00cc" : props.gender === "Man" ? "#2968ff" : "#999999";
+    });
+
+    return { genderTextColor };
   },
 };
 </script>
