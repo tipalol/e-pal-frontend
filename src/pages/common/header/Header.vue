@@ -16,10 +16,13 @@
     </div>
     <div v-else class="flex items-center space-x-4">
       <router-link class="font-semibold bg-gray-700 text-gray-300 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
-      <router-link to="/profile">
+      <router-link
+          :to=getProfileUrl()
+      >
       <p class="font-semibold text-gray-300 hover:text-white">@{{profile.username}}</p>
       </router-link>
-      <router-link to="/profile">
+      <router-link
+       :to=getProfileUrl()>
         <img :src="profile.avatar" alt="User Avatar" class="w-[24px] h-[24px] rounded-full" />
       </router-link>
       <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
@@ -84,6 +87,10 @@ export default {
       useAuthStore().clearToken();
       useAuthStore().clearProfile();
       console.log('Logged out')
+    },
+    getProfileUrl() {
+      console.log("/profile/" + useAuthStore().profile.username);
+      return "/profile/" + useAuthStore().profile.username;
     }
   }
 }
