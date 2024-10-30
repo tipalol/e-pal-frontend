@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-900 text-white min-h-screen">
     <Header />
-    <Banner />
+    <Banner :slides="slidesData" />
 
     <MainServices :services="services" />
 
@@ -24,6 +24,20 @@ export default {
   data() {
     return {
       services: [],
+      slidesData: [
+        {
+          heading: 'Welcome to Our Site',
+          backgroundImage: 'banner.webp',
+        },
+        {
+          heading: 'Enjoy Our Services',
+          backgroundImage: 'banner.webp',
+        },
+        {
+          heading: 'Contact Us Today',
+          backgroundImage: 'banner.webp',
+        },
+      ],
     };
   },
   mounted() {
