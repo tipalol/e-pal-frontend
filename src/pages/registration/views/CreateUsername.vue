@@ -49,6 +49,15 @@ export default {
       if (response.data)
       {
         console.log("Edit profile successful:", response.data);
+
+        const token = useAuthStore().token;
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+        const response = await axios.post("http://localhost:5033/api/auth/refresh", {}, config);
+        const jwt = response.data;
+        useAuthStore().setToken(jwt);
+
         this.$emit('username-chosen');
       }
       else {

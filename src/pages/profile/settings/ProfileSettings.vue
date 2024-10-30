@@ -71,7 +71,7 @@
             <!-- Кнопка отмены -->
 
             <div class="flex justify-center">
-              <router-link to="/profile">
+              <router-link :to=getProfileUrl()>
               <button
                   type="button"
                   class="w-44 bg-red-500 text-white py-3 rounded-full font-bold text-xl hover:bg-red-600 transition">
@@ -122,13 +122,30 @@ export default {
 
       if (response.data)
       {
-        console.log("Edit profile successful:", response.data);
-        this.$router.push("/profile");
+        console.log("Edit profile successful:");
+
+        const token = useAuthStore().token;
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+        const response = await axios.post("http://localhost:5033/api/auth/refresh", {}, config);
+        const jwt = response.data;
+        useAuthStore().setToken(jwt);
+
+        this.$router.push(this.getProfileUrl());
       }
       else {
         this.error = "Edit profile failed. Please try again.";
         console.error("Error during edit profile:", response.data);
       }
+    },
+    getProfileUrl() {
+      if (!useAuthStore().isLoggedIn)
+      {
+        return "/registration";
+      }
+      console.log("/profile/" + useAuthStore().profile.username);
+      return "/profile/" + useAuthStore().profile.username;
     }
   }
 }

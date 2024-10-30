@@ -87,7 +87,6 @@ export default {
   methods: {
     logOut() {
       this.token.jwt = null;
-      this.token = null;
       useAuthStore().clearToken();
       useAuthStore().clearProfile();
       console.log('Logged out')
