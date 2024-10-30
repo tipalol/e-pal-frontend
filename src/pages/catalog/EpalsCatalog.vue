@@ -73,7 +73,7 @@ export default {
   methods: {
     async fetchEpalsCatalog() {
       try {
-        const response = await axios.get("http://localhost:5033/api/Catalog/serviceType/"+this.id+"?take=20");
+        const response = await axios.get("http://localhost:5033/api/catalog/epals?serviceTypeId="+this.id+"&take=20");
         this.services = response.data;
         this.users = response.data;
         console.log(this.services);

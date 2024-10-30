@@ -1,5 +1,5 @@
 <template>
-  <section class="p-8 mx-auto ant-spin-container">
+  <section class="p-8 mx-auto">
     <div class=" container-fluid space-y-16">
      <div class=  "mt-12">
       <h2 class="text-2xl font-bold mb-6 txt-title-l text-txt-primary-normal">All Services</h2>
