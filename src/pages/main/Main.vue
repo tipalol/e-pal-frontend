@@ -5,6 +5,8 @@
 
     <MainServices :services="services" />
 
+    <NewbiesEpals />
+
     <MoreEpals />
   </div>
 </template>
@@ -15,9 +17,10 @@ import Banner from "./components/Banner.vue";
 import MainServices from "./components/MainServices.vue";
 import axios from "axios";
 import MoreEpals from "./components/MoreEpals.vue";
+import NewbiesEpals from "./components/NewbiesEpals.vue";
 
 export default {
-  components: {MoreEpals, MainServices, Banner, Header},
+  components: {NewbiesEpals, MoreEpals, MainServices, Banner, Header},
   data() {
     return {
       services: [],
