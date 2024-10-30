@@ -1,11 +1,13 @@
 <template>
-  <div class="min-h-screen bg-gray-900 text-white">
+  <div v-if="!showError.flag" class="min-h-screen bg-gray-900 text-white">
     <Header />
 
     <ProfileBanner
         :username="profile.username"
         :avatar="profile.avatar"
         :languages="profile.languages"
+        :gender="profile.gender"
+        :can-edit="canEdit.flag"
     />
 
     <div class="flex space-x-8 px-8 py-6">
@@ -23,6 +25,11 @@
       />
     </div>
   </div>
+  <Error v-if="showError.flag"
+         button-url="/"
+         title="Error"
+         message="Something goes wrong.."
+  />
 </template>
 
 <script>
@@ -33,10 +40,11 @@ import ProfileServices from "./components/ProfileServices.vue";
 import ServiceDetails from "./components/ServiceDetails.vue";
 import ProfileActions from "./components/ProfileActions.vue";
 import {useAuthStore} from "../../stores/auth.js";
+import Error from "../common/Error.vue";
 
 export default {
   name: "EpalProfile",
-  components: {ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
+  components: {Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
   props: {
     username: {
       type: String,
@@ -67,33 +75,42 @@ export default {
         serviceTypeId: ""
       }
     ]);
+    const canEdit = ref({
+      flag: false
+    })
+    const showError = ref({
+      flag: false
+    })
 
     onMounted(async () => {
       const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
       try {
+        console.log(profile);
         const response = await fetch("http://localhost:5033/api/profile/"+props.username, { headers });
         if (response.ok) {
           const data = await response.json();
-
+          canEdit.value.flag = data.data.username === useAuthStore().profile.username;
           profile.value = data.data;
-          console.log("FUUUCK  + " + profile.value.username)
-
           console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
         } else {
+          showError.value = {flag: true}
           console.error("Failed to fetch profile data");
         }
       } catch (error) {
+        showError.value = {flag: true}
         console.error("Error fetching profile data:", error);
       }
 
       try {
+        console.log(profile.value);
         const response = await fetch("http://localhost:5033/api/services/"+ profile.value.id + "/categories", { headers });
+
         if (response.ok) {
           const data = await response.json();
-
+          console.log(data)
           serviceTypes.value = data.data;
 
-          console.log('Got service types: ' + serviceTypes.value[0].id);
+          console.log('Got service types: ' + serviceTypes.value.length);
         } else {
           console.error("Failed to fetch service types");
         }
@@ -102,22 +119,29 @@ export default {
       }
 
       try {
-        const response = await fetch("http://localhost:5033/api/services/"+ profile.value.id + "/category/" + serviceTypes.value[0].id, { headers });
-        if (response.ok) {
-          const data = await response.json();
+        if (serviceTypes.value.length !== 0)
+        {
+          const response = await fetch("http://localhost:5033/api/services/"+ profile.value.id + "/category/" + serviceTypes.value[0].id, { headers });
+          if (response.ok) {
+            const data = await response.json();
 
-          services.value = data.data;
+            services.value = data.data;
 
-          console.log('Got services: ' + services.value[0].name);
-        } else {
-          console.error("Failed to fetch services");
+            console.log('Got services: ' + services.value[0].name);
+          } else {
+            console.error("Failed to fetch services");
+          }
         }
+        else {
+          console.log("There is not service types, don't fetch services")
+        }
+
       } catch (error) {
         console.error("Error fetching services:", error);
       }
     });
 
-    return { profile };
+    return { profile, canEdit, showError };
   },
   data() {
     return {

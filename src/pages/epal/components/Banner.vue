@@ -1,9 +1,10 @@
-<!-- UserBanner.vue -->
 <template>
   <section class="bg-gray-800 py-8 px-8 text-center relative">
-    <div class="flex flex-col items-center space-y-4">
-      <img :src="avatar" alt="User Avatar" class="w-24 h-24 rounded-full" />
-      <h1 class="text-2xl font-bold">{{ username }}</h1>
+    <div class="flex flex-col items-center space-y-3 font-bold">
+      <img :src="avatar" alt="User Avatar" class="w-36 h-36 rounded-full" />
+      <h1 class="text-2xl">{{ username }}</h1>
+      <!-- Используем динамическое свойство для цвета текста -->
+      <p :style="{ color: genderTextColor }" class="text-sm text-xl">{{ gender }}</p>
       <p class="text-gray-400 text-sm">{{ languages }}</p>
       <div class="flex justify-center space-x-6 mt-4">
         <a href="#" class="text-white">Achievements</a>
@@ -12,7 +13,7 @@
         <a href="#" class="text-white">Wish</a>
         <a href="#" class="text-white">Feeds</a>
       </div>
-      <router-link class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white" to="/profile/settings">
+      <router-link v-if="canEdit" class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white" to="/profile/settings">
         Edit Profile
       </router-link>
     </div>
@@ -20,9 +21,7 @@
 </template>
 
 <script>
-import {useAuthStore} from "../../../stores/auth.js";
-import {useRoute} from "vue-router";
-import {onMounted, ref} from "vue";
+import {computed} from "vue";
 
 export default {
   name: "ProfileBanner",
@@ -39,23 +38,23 @@ export default {
       type: String,
       required: true,
     },
+    gender: {
+      type: String,
+      default: "--",
+      required: false,
+    },
+    canEdit: {
+      type: Boolean,
+      required: true
+    }
   },
-  setup() {
-    const route = useRoute();
-    const username = ref(route.params.username); // Access the username from route parameters
-
-    onMounted(() => {
-      console.log("Username from URL:", username.value); // Output: tipalol if the URL is /profile/tipalol
-      this.checkEditPossibility(username.value)
+  setup(props) {
+    // Определяем цвет текста в зависимости от пола
+    const genderTextColor = computed(() => {
+      return props.gender === "Woman" ? "#ff00cc" : props.gender === "Man" ? "#2968ff" : "#999999";
     });
 
-    return { username };
+    return { genderTextColor };
   },
-  methods: {
-    checkEditPossibility(username) {
-      console.log(useAuthStore().profile.username)
-      return username === useAuthStore().profile.username
-    }
-  }
 };
 </script>
