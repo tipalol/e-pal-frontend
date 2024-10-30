@@ -2,7 +2,9 @@
   <section class="p-8 mx-auto">
     <div class=" container-fluid space-y-16">
      <div class=  "mt-12">
-      <h2 class="text-2xl font-bold mb-6 txt-title-l text-txt-primary-normal">All Services</h2>
+       <router-link to="/categories">
+         <h2 class="text-2xl font-bold mb-6 txt-title-l text-txt-primary-normal">All Services</h2>
+       </router-link>
 
        <div class="grid grid-cols-3 gap-8 mt-8">
          <!-- Games -->

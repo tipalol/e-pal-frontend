@@ -33,7 +33,7 @@ export default {
       users: [],
       take: 10,
       skip: 0,
-      total: 0,
+      total: 100,
       isLoading: false,
       observer: null,
     };

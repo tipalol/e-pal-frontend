@@ -6,6 +6,7 @@ import ProfileSettings from './pages/profile/settings/ProfileSettings.vue';
 import BecomeEpal from './pages/content/BecomeEpal.vue';
 import ServicePage from './pages/catalog/EpalsCatalog.vue';
 import EpalProfile from "./pages/epal/EpalProfile.vue";
+import Categories from "./pages/categories/Categories.vue";
 
 const routes = [
     { path: '/', component: MainPage },
@@ -13,6 +14,7 @@ const routes = [
     { path: '/profile', component: Profile },
     { path: '/profile/settings', component: ProfileSettings },
     { path: '/becomeEpal', component: BecomeEpal },
+    { path: '/categories', component: Categories },
     { path: '/catalog/:id', component: ServicePage, props: true },
     { path: '/profile/:username', component: EpalProfile, props: true },
 ];
