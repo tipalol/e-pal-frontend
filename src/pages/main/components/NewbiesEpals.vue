@@ -40,7 +40,7 @@ export default {
   methods: {
     async fetchEpalsCatalog() {
       try {
-        const response = await axios.get("http://localhost:5033/api/catalog/epals?sort=1");
+        const response = await axios.get("http://localhost:5033/api/catalog/epals?take=3&sort=1");
         this.services = response.data.data;
         this.users = response.data.data;
         console.log(this.services);
