@@ -9,7 +9,7 @@
         <a href="#" class="text-gray-300 hover:text-white">App</a>
       </nav>
     </div>
-    <div v-if="!token || !token.jwt" class="flex items-center space-x-4">
+    <div v-if="!token.jwt" class="flex items-center space-x-4">
       <router-link class="font-semibold text-gray-300 bg-gray-700 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
       <router-link class="font-semibold text-gray-300 hover:text-white" to="/registration">Log in</router-link>
       <router-link class="font-semibold bg-purple-500 text-gray-300 px-4 py-2 rounded-lg" to="/registration">Sign Up</router-link>
@@ -19,10 +19,11 @@
       <router-link
           :to=getProfileUrl()
       >
-      <p class="font-semibold text-gray-300 hover:text-white">@{{profile.username}}</p>
+        <p class="font-semibold text-gray-300 hover:text-white">@{{profile.username}}</p>
       </router-link>
       <router-link
-       :to=getProfileUrl()>
+        :to=getProfileUrl()
+      >
         <img :src="profile.avatar" alt="User Avatar" class="w-[24px] h-[24px] rounded-full" />
       </router-link>
       <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
@@ -42,38 +43,41 @@ export default {
       avatar: ""
     });
     const token = ref({
-      jwt: "None"
+      jwt: null
     });
 
     onMounted(async () => {
-      token.value.jwt = useAuthStore().token;
-      console.log('Token: ' + token.value.jwt)
-
-      if (useAuthStore().profile)
+      if (useAuthStore().isLoggedIn)
       {
-        profile.value.username = useAuthStore().profile.username;
-        profile.value.avatar = useAuthStore().profile.avatar;
-      }
-      else
-      {
-        try {
-          const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
-          const response = await fetch("http://localhost:5033/api/profile", { headers });
-          if (response.ok) {
-            const data = await response.json();
+        token.value.jwt = useAuthStore().token;
+        console.log('Token: ' + token.value.jwt)
 
-            profile.value = data.data;
-            useAuthStore().setProfile(profile.value);
+        if (useAuthStore().profile)
+        {
+          profile.value.username = useAuthStore().profile.username;
+          profile.value.avatar = useAuthStore().profile.avatar;
+        }
+        else
+        {
+          try {
+            const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
+            const response = await fetch("http://localhost:5033/api/profile", { headers });
+            if (response.ok) {
+              const data = await response.json();
 
-            profile.value.username = useAuthStore().profile.username;
-            profile.value.avatar = useAuthStore().profile.avatar;
+              profile.value = data.data;
+              useAuthStore().setProfile(profile.value);
 
-            console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
-          } else {
-            console.error("Failed to fetch profile data");
-          }
-        } catch (error) {
+              profile.value.username = useAuthStore().profile.username;
+              profile.value.avatar = useAuthStore().profile.avatar;
+
+              console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
+            } else {
+              console.error("Failed to fetch profile data");
+            }
+          } catch (error) {
             console.error("Error fetching profile data:", error);
+          }
         }
       }
     });
@@ -89,6 +93,10 @@ export default {
       console.log('Logged out')
     },
     getProfileUrl() {
+      if (!useAuthStore().isLoggedIn)
+      {
+        return "/registration";
+      }
       console.log("/profile/" + useAuthStore().profile.username);
       return "/profile/" + useAuthStore().profile.username;
     }
