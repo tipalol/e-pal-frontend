@@ -1,17 +1,15 @@
 <template>
-  <router-link :to="getProfileUrl()">
-    <div class="relative w-64 h-64">
-      <div class="">
-        <img
-            :src="avatar"
-            alt="user profile"
-            class="w-16 h-16 rounded-full absolute -top-16 left-4 border-4 border-gray-900"
-        />
+  <router-link class="h-min" :to="getProfileUrl()">
+    <div class="relative h-min h-36">
+      <img
+          :src="avatar"
+          alt="user profile"
+          class="w-16 h-16 rounded-full absolute -top-16 left-4 border-4 border-gray-900"
+      />
 
-        <div class="absolute top-4 left-12 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div>
-      </div>
+      <div class="absolute -top-4 left-16 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div>
 
-      <div class="mt-4 w-8 h-8">
+      <div class="mt-4">
         <div class="mt-8">
           <h3 class="font-semibold text-lg">{{ username }}</h3>
           <div class="flex items-center text-sm text-yellow-400 mt-1">
