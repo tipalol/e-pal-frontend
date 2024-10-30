@@ -5,6 +5,7 @@ import Profile from './pages/profile/Profile.vue';
 import ProfileSettings from './pages/profile/settings/ProfileSettings.vue';
 import BecomeEpal from './pages/content/BecomeEpal.vue';
 import ServicePage from './pages/catalog/EpalsCatalog.vue';
+import EpalProfile from "./pages/epal/EpalProfile.vue";
 
 const routes = [
     { path: '/', component: MainPage },
@@ -12,7 +13,8 @@ const routes = [
     { path: '/profile', component: Profile },
     { path: '/profile/settings', component: ProfileSettings },
     { path: '/becomeEpal', component: BecomeEpal },
-    { path: '/catalog/:id', component: ServicePage, props: true }, // Add this route for ServicePage
+    { path: '/catalog/:id', component: ServicePage, props: true },
+    { path: '/profile/:username', component: EpalProfile, props: true },
 ];
 
 const router = createRouter({
