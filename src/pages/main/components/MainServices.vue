@@ -24,7 +24,7 @@
          <!-- Castom -->
          <div class="relative px-6 rounded-lg flex items-center cursor-pointer bg-purple-500 hover:bg-purple-600" style="height: 84px;">
            <div class="flex items-center gap-2">
-             <div class="txt-title-1">Castom</div>
+             <div class="txt-title-1">Custom</div>
              <i class="iconfont icon-arrow-right" style="font-size: 16px;"></i>
            </div>
            <div class="absolute bottom-0 right-0 w-[120px] h-[120px] transition-transform duration-200 ease-in-out transform img___3s979"></div>
@@ -32,10 +32,10 @@
        </div>
 
        <!-- Service Cards -->
-      <div class="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1">
-        <div v-for="service in services" :key="service.name" class="bg-gray-800 rounded-lg h-[390px] w-[270px]">
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div v-for="service in services" :key="service.name" class="bg-gray-800 rounded-lg">
           <img @click="handleServiceClick(service.id)"
-               class="object-cover bg-cover rounded-lg mb-4 cursor-pointer hover:scale-110"
+               class="object-cover bg-center bg-cover rounded-lg cursor-pointer hover:scale-110"
                :src="service.avatar"
                :alt="service.name"
           />
