@@ -41,8 +41,8 @@ export default {
     async fetchEpalsCatalog() {
       try {
         const response = await axios.get("http://localhost:5033/api/catalog/epals?sort=1");
-        this.services = response.data;
-        this.users = response.data;
+        this.services = response.data.data;
+        this.users = response.data.data;
         console.log(this.services);
       } catch (error) {
         console.error("Error fetching epals:", error);
