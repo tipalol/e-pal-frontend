@@ -89,7 +89,14 @@ export default {
         const response = await fetch("http://localhost:5033/api/profile/"+props.username, { headers });
         if (response.ok) {
           const data = await response.json();
-          canEdit.value.flag = data.data.username === useAuthStore().profile.username;
+          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA" + data.data.id)
+          if (useAuthStore().isLoggedIn)
+          {
+            canEdit.value.flag = data.data.username === useAuthStore().profile.username;
+          }
+          else {
+            canEdit.value = false;
+          }
           profile.value = data.data;
           console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
         } else {

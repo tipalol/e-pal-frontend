@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       users: [],
-      take: 3,
+      take: 10,
       skip: 0,
       total: 0,
       isLoading: false,
