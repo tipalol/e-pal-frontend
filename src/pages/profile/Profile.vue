@@ -6,6 +6,7 @@
         :username="profile.username"
         :avatar="profile.avatar"
         :languages="profile.languages"
+        :gender="profile.gender"
     />
 
     <div class="flex space-x-8 px-8 py-6">
@@ -33,11 +34,14 @@ import ProfileServices from "./components/ProfileServices.vue";
 import ServiceDetails from "./components/ServiceDetails.vue";
 import ProfileActions from "./components/ProfileActions.vue";
 import {useAuthStore} from "../../stores/auth.js";
+import {useRouter} from "vue-router";
 
 export default {
   name: "UserProfile",
   components: {ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
+
   setup() {
+    const router = useRouter();
     const profile = ref({
       id: "4363236",
       username: "dopameanie",
@@ -45,6 +49,11 @@ export default {
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
     });
+    const logOut = () => {
+      useAuthStore().clearToken();
+      useAuthStore().clearProfile();
+      console.log("Logged out");
+    };
     const serviceTypes = ref([
       {
         id: "",
@@ -63,6 +72,14 @@ export default {
     ]);
 
     onMounted(async () => {
+      // Проверка токена
+      if (!useAuthStore().isLoggedIn) {
+        console.log("redirect");
+        logOut();
+        router.push('/'); // Перенаправьте на главную страницу, если токен недействителен
+        return;
+      }
+
       const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
       try {
         const response = await fetch("http://localhost:5033/api/profile", { headers });
