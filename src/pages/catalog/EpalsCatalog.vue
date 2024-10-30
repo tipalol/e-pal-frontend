@@ -32,38 +32,14 @@
           :key="user.id"
           class="bg-gray-800 p-4 rounded-lg relative overflow-hidden"
       >
-        <!-- User Profile Picture -->
-        <img
-            :src="user.avatar"
-            alt="user profile"
-            class="w-16 h-16 rounded-full absolute -top-8 left-4 border-4 border-gray-900"
+
+        <EpalCard
+            :id="user.id"
+            :bio="user.bio"
+            :avatar="user.avatar"
+            :username="user.username"
         />
 
-        <!-- Online Status Dot -->
-        <div class="absolute top-2 left-12 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div>
-
-        <!-- Play Icon -->
-        <div class="absolute top-4 right-4">
-          <button class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center">
-            ▶
-          </button>
-        </div>
-
-        <!-- User Details -->
-        <div class="mt-8">
-          <h3 class="font-semibold text-lg">{{ user.username }}</h3>
-          <div class="flex items-center text-sm text-yellow-400 mt-1">
-            <span>{{ user.rating }} ⭐</span>
-            <span class="ml-1 text-gray-400">({{ user.reviews }})</span>
-          </div>
-          <p class="text-gray-400 text-xs mt-2">{{ user.description }}</p>
-        </div>
-
-        <!-- Service Info -->
-        <div class="flex items-center justify-between mt-4 text-sm">
-          <span class="bg-gray-700 px-2 py-1 rounded-full">{{ user.serviceType }}</span>
-          <span class="text-purple-400 font-semibold">{{ user.price }}/{{ user.unit }}</span>
-        </div>
       </div>
     </div>
   </div>
@@ -72,9 +48,10 @@
 <script>
 import axios from "axios";
 import Header from "../common/header/Header.vue";
+import EpalCard from "../common/EpalCard.vue";
 
 export default {
-  components: {Header},
+  components: {EpalCard, Header},
   props: {
     id: {
       type: String,
@@ -83,18 +60,7 @@ export default {
   },
   data() {
     return {
-      users: [
-        {
-          id: 1,
-          avatar: 'path/to/image1.jpg',
-          username: 'LaKimi 💖 🏆',
-        },
-        {
-          id: 1,
-          avatar: 'path/to/image1.jpg',
-          username: 'LaKimi 💖 🏆',
-        },
-      ],
+      users: [],
       serviceType: {
         name: ""
       },
