@@ -40,8 +40,8 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.fetchServices();
+  async mounted() {
+    await this.fetchServices();
   },
   methods: {
     async fetchServices() {
