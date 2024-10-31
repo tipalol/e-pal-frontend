@@ -2,12 +2,13 @@
   <div class="bg-gray-900 text-white min-h-screen">
     <Header />
     <Banner :slides="slidesData" />
+    <div class="container-fluid space-y-16" style="padding-bottom:200px">
+      <MainServices :services="services" />
+      <NewbiesEpals />
+      <MoreEpals />
+    </div>
 
-    <MainServices :services="services" />
 
-    <NewbiesEpals />
-
-    <MoreEpals />
   </div>
 </template>
 
