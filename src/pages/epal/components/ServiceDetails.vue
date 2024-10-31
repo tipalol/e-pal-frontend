@@ -1,6 +1,7 @@
 <template>
   <section class="w-2/4 space-y-6">
-    <div class="bg-gray-800 p-6 rounded-lg">
+    <!-- card -->
+    <div lable="card" class="bg-gray-800 p-6 rounded-lg">
       <h2 class="text-lg font-semibold">{{ title }}</h2>
       <p class="text-yellow-500 text-sm">5.0 • 1759 Served</p>
       <p class="mt-4 text-gray-400 text-sm">{{ text }}</p>
@@ -9,9 +10,9 @@
 
     <!-- Service Types -->
     <div class="bg-gray-800 p-6 rounded-lg space-y-4">
-      <h3 class="text-lg font-semibold">Service Types • {{ serviceTypes.length }}</h3>
+      <h3 class="text-lg font-semibold"> Services • {{ services.length }}</h3>
       <div
-          v-for="(type, index) in serviceTypes"
+          v-for="(type, index) in services"
           :key="index"
           class="flex items-center justify-between bg-gray-700 p-3 rounded-md"
       >
@@ -24,7 +25,7 @@
 
 <script>
 export default {
-  name: "ServiceDetails",
+  name: "services",
   props: {
     title: {
       type: String,
@@ -34,7 +35,7 @@ export default {
       type: String,
       required: true,
     },
-    serviceTypes: {
+    services: {
       type: Array,
       required: true,
     },
