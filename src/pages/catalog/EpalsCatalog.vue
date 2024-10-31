@@ -30,7 +30,7 @@
       <div
           v-for="user in users"
           :key="user.id"
-          class="bg-gray-800 p-4 rounded-lg relative overflow-hidden"
+          class="bg-gray-800 p-4 rounded-lg relative overflow-visible"
       >
 
         <EpalCard

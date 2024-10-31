@@ -6,7 +6,7 @@
       <div
           v-for="user in users"
           :key="user.id"
-          class="bg-gray-800 p-4 rounded-lg relative overflow-hidden"
+          class="bg-gray-800 p-4 rounded-lg relative overflow-visible"
       >
         <EpalCard
             :id="user.id"
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       users: [],
-      take: 10,
+      take: 20,
       skip: 0,
       total: 100,
       isLoading: false,
