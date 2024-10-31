@@ -1,51 +1,43 @@
 <template>
-  <section class="p-8 mx-auto">
-    <div class=" container-fluid space-y-16">
-     <div class=  "mt-12">
-       <router-link to="/categories">
-         <h2 class="text-2xl font-bold mb-6 txt-title-l text-txt-primary-normal">All Services</h2>
-       </router-link>
+  <div class="flex justify-center">
 
-       <div class="grid grid-cols-3 gap-8 mt-8">
-         <!-- Games -->
-         <div class="relative px-6 rounded-lg flex items-center cursor-pointer bg-purple-500 hover:bg-purple-600" style="height: 84px;">
-           <div class="flex items-center gap-2">
-             <div class="txt-title-1">Games</div>
-             <i class="iconfont icon-arrow-right" style="font-size: 16px;"></i>
-           </div>
-           <div class="absolute bottom-0 right-0 w-[120px] h-[120px] transition-transform duration-200 ease-in-out transform img___3s979"></div>
-         </div>
-         <!-- Chilling -->
-         <div class="relative px-6 rounded-lg flex items-center cursor-pointer bg-purple-500 hover:bg-purple-600" style="height: 84px;">
-           <div class="flex items-center gap-2">
-             <div class="txt-title-1">Chilling</div>
-             <i class="iconfont icon-arrow-right" style="font-size: 16px;"></i>
-           </div>
-           <div class="absolute bottom-0 right-0 w-[120px] h-[120px] transition-transform duration-200 ease-in-out transform img___3s979"></div>
-         </div>
-         <!-- Castom -->
-         <div class="relative px-6 rounded-lg flex items-center cursor-pointer bg-purple-500 hover:bg-purple-600" style="height: 84px;">
-           <div class="flex items-center gap-2">
-             <div class="txt-title-1">Custom</div>
-             <i class="iconfont icon-arrow-right" style="font-size: 16px;"></i>
-           </div>
-           <div class="absolute bottom-0 right-0 w-[120px] h-[120px] transition-transform duration-200 ease-in-out transform img___3s979"></div>
-         </div>
-       </div>
-
-       <!-- Service Cards -->
-      <div class="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        <div v-for="service in services" :key="service.name" class="bg-gray-800 rounded-lg">
-          <img @click="handleServiceClick(service.id)"
-               class="object-cover bg-center bg-cover rounded-lg cursor-pointer hover:scale-110"
-               :src="service.avatar"
-               :alt="service.name"
+     <div class="relative mt-10 ml-5 w-[93rem]">
+      <!-- Scrollable Row Container -->
+      <div class="flex overflow-x-auto space-x-6 items-center no-scrollbar" ref="scrollContainer">
+        <div
+            v-for="service in services"
+            :key="service.name"
+            class="min-w-[350px] max-w-[350px] bg-gray-800 rounded-lg flex-shrink-0"
+        >
+          <img
+              @click="handleServiceClick(service.id)"
+              class="object-cover bg-center bg-cover rounded-lg cursor-pointer hover:scale-110 transition transform duration-300"
+              :src="service.avatar"
+              :alt="service.name"
           />
         </div>
       </div>
+       <!-- Left Arrow Button -->
+       <button
+           class="absolute -left-5 top-1/2 transform -translate-y-1/2 bg-gray-600 bg-opacity-75 w-16 h-16
+            rounded-full hover:bg-opacity-90 flex items-center justify-center text-white text-6xl"
+           @click="scrollLeft"
+       >
+         <i class="icon-arrow-left mb-3"><</i>
+       </button>
+
+       <!-- Right Arrow Button -->
+       <button
+           class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-600 bg-opacity-75 w-16 h-16
+            rounded-full hover:bg-opacity-90 flex items-center justify-center text-white text-6xl"
+           @click="scrollRight"
+       >
+         <i class="icon-arrow-right mb-3">></i>
+       </button>
     </div>
-    </div>
-  </section>
+
+
+  </div>
 </template>
 
 <script>
@@ -59,7 +51,26 @@ export default {
   methods: {
     handleServiceClick(id) {
       this.$router.push("/catalog/" + id);
-    }
+    },
+    scrollLeft() {
+      // Scroll left by 200px
+      this.$refs.scrollContainer.scrollBy({ left: -370*4, behavior: 'smooth' });
+    },
+    scrollRight() {
+      // Scroll right by 200px
+      this.$refs.scrollContainer.scrollBy({ left: 370*4, behavior: 'smooth' });
+    },
   }
 };
 </script>
+
+<style scoped>
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>
