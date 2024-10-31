@@ -3,10 +3,9 @@
     <div class="flex items-center space-x-4">
       <router-link to="/"><img src="./assets/logo.png" alt="E-Pal Logo" class="h-8" /></router-link>
       <nav class="hidden md:flex space-x-4">
-        <a href="#" class="text-gray-300 hover:text-white">Play</a>
-        <router-link href="#" class="text-gray-300 hover:text-white" to="/">ePals</router-link>
-        <a href="#" class="text-gray-300 hover:text-white">Community</a>
-        <a href="#" class="text-gray-300 hover:text-white">App</a>
+        <a href="#" class="text-gray-300 hover:text-white text-[20px] font-menu">Play</a>
+        <router-link href="#" class="text-gray-300 hover:text-white font-menu  text-[20px]" to="/">ePals</router-link>
+        <a href="#" class="text-gray-300 hover:text-white font-menu  text-[20px]">Community</a>
       </nav>
     </div>
     <div v-if="!token.jwt" class="flex items-center space-x-4">

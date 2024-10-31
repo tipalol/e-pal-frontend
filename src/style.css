@@ -10,6 +10,13 @@
     font-display: swap;
     src: url(./assets/fonts/Bangers-Regular.ttf) format('truetype');
   }
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(./assets/fonts/Poppins-Bold.ttf) format('truetype');
+  }
 }
 
 body

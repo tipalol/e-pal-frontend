@@ -6,7 +6,8 @@ export default {
   ],
   theme: {
     fontFamily: {
-      'display': ['Bangers']
+      'display': ['Bangers'],
+      'menu': ['Poppins'],
     },
     extend: {},
   },
