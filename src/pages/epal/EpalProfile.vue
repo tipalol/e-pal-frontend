@@ -52,6 +52,11 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      showModal: true
+    }
+  },
   setup(props) {
     const profile = ref({
       id: "4363236",
