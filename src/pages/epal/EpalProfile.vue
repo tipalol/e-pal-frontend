@@ -30,6 +30,7 @@
          title="Error"
          message="Something goes wrong.."
   />
+  <OrderModal v-if="showModal" @close="showModal = false" />
 </template>
 
 <script>
@@ -39,12 +40,13 @@ import ProfileBanner from "./components/Banner.vue";
 import ProfileServices from "./components/ProfileServices.vue";
 import ServiceDetails from "./components/ServiceDetails.vue";
 import ProfileActions from "./components/ProfileActions.vue";
+import OrderModal from "./components/OrderModal.vue";
 import {useAuthStore} from "../../stores/auth.js";
 import Error from "../common/Error.vue";
 
 export default {
   name: "EpalProfile",
-  components: {Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
+  components: {OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
   props: {
     username: {
       type: String,
@@ -167,6 +169,7 @@ export default {
           { name: "daily dose of dopa", price: "76.66 / Time" },
         ],
       },
+      showModal: false,
     };
   },
 };
