@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       showModal: false,
-      name: "EpalProfile",
+      name: "Profile",
     }
   },
   setup(props) {

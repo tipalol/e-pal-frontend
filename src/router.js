@@ -4,7 +4,7 @@ import MainPage from './pages/main/Main.vue';
 import ProfileSettings from './pages/profile/settings/ProfileSettings.vue';
 import BecomeEpal from './pages/content/BecomeEpal.vue';
 import ServicePage from './pages/catalog/EpalsCatalog.vue';
-import EpalProfile from "./pages/profile/EpalProfile.vue";
+import EpalProfile from "./pages/profile/Profile.vue";
 import Categories from "./pages/categories/Categories.vue";
 
 const routes = [
