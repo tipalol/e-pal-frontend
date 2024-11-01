@@ -6,7 +6,7 @@
         :avatar="profile.avatar"
         :languages="profile.languages"
         :gender="profile.gender"
-        :can-edit="canEdit.flag"
+        :can-edit="canEdit"
     />
     <div class="flex space-x-8 px-8 py-6">
       <ProfileServices :categories="categories" @category-selected="fetchServicesByCategory" />
@@ -66,9 +66,9 @@ export default {
     });
     const categories = ref([]);
     const services = ref([]);
-    const canEdit = ref({ flag: false });
     const showError = ref({ flag: false });
-    const showModal = ref({ flag: false });
+
+    const canEdit = computed(() => useAuthStore().profile && useAuthStore().profile.username === props.username);
 
     const fetchServicesByCategory = async (categoryId) => {
       const headers = { Authorization: "Bearer " + useAuthStore().token };
@@ -93,6 +93,7 @@ export default {
         if (response.ok) {
           const data = await response.json();
           profile.value = data.data;
+          useAuthStore().setProfile(profile);
         } else {
           showError.value = { flag: true };
           console.error("Failed to fetch profile data");
