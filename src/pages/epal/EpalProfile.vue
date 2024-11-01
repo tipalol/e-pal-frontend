@@ -54,7 +54,7 @@ export default {
   },
   data() {
     return {
-      showModal: true
+      showModal: false
     }
   },
   setup(props) {
@@ -103,7 +103,7 @@ export default {
       }
 
       try {
-        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}/categories`, { headers });
+        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, { headers });
         if (response.ok) {
           const data = await response.json();
           categories.value = data.data;
