@@ -83,7 +83,7 @@ export default {
     },
     async fetchServiceType() {
       try {
-        const response = await axios.get("http://localhost:5033/api/services/category/"+this.id);
+        const response = await axios.get("http://localhost:5033/api/categories/"+this.id);
         this.serviceType = response.data.data;
         console.log(this.services);
       } catch (error) {
