@@ -13,7 +13,7 @@
     <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
     <div class="flex justify-end">
       <button
-          @click="saveProfile()"
+          @click="saveProfile"
           type="button"
           class="w-3/12 bg-purple-500 text-white py-3 rounded-full font-bold hover:bg-purple-600 transition mt-3"
       >
@@ -42,9 +42,7 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const response = await axios.post("http://localhost:5033/api/profile", {
-        username: this.username,
-      }, config);
+      const response = await axios.post("http://localhost:5033/api/profile/username?username=" + this.username, {}, config);
 
       if (response.data)
       {

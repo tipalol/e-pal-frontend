@@ -43,14 +43,18 @@ import Error from "../common/Error.vue";
 import OrderModal from "./components/OrderModal.vue";
 
 export default {
-  name: "EpalProfile",
-  showModal: false,
   components: { OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
   props: {
     username: {
       type: String,
       required: true,
     },
+  },
+  data() {
+    return {
+      showModal: false,
+      name: "EpalProfile",
+    }
   },
   setup(props) {
     const profile = ref({
@@ -64,11 +68,12 @@ export default {
     const services = ref([]);
     const canEdit = ref({ flag: false });
     const showError = ref({ flag: false });
+    const showModal = ref({ flag: false });
 
     const fetchServicesByCategory = async (categoryId) => {
       const headers = { Authorization: "Bearer " + useAuthStore().token };
       try {
-        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}/category/${categoryId}`, { headers });
+        const response = await fetch(`http://localhost:5033/api/serviceoptions/${profile.value.id}/service/${categoryId}`, { headers });
         if (response.ok) {
           const data = await response.json();
           services.value = data.data;
@@ -98,15 +103,15 @@ export default {
       }
 
       try {
-        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}/categories`, { headers });
+        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, { headers });
         if (response.ok) {
           const data = await response.json();
           categories.value = data.data;
         } else {
-          console.error("Failed to fetch service categories");
+          console.error("Failed to fetch services");
         }
       } catch (error) {
-        console.error("Error fetching service categories:", error);
+        console.error("Error fetching services:", error);
       }
     });
 
