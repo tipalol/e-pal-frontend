@@ -25,6 +25,15 @@
       >
         <img :src="profile.avatar" alt="User Avatar" class="w-[24px] h-[24px] rounded-full" />
       </router-link>
+      <div class="flex items-center space-x-1">
+        <p class="font-semibold text-gray-300 hover:text-white">
+          balance:</p>
+
+        <p class="font-semibold text-gray-300 hover:text-white">
+          {{profile.balance}}</p>
+        <img src="./assets/money2.svg"
+             :style="{ width: '30px', height: '30px'}" />
+      </div>
       <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
     </div>
   </header>
@@ -39,6 +48,7 @@ export default {
   setup() {
     const profile = ref({
       username: "",
+      balance: 0,
       avatar: ""
     });
     const token = ref({
@@ -54,6 +64,7 @@ export default {
         {
           profile.value.username = useAuthStore().profile.username;
           profile.value.avatar = useAuthStore().profile.avatar;
+          profile.value.balance = useAuthStore().profile.balance;
         }
         else
         {
@@ -68,6 +79,7 @@ export default {
 
               profile.value.username = useAuthStore().profile.username;
               profile.value.avatar = useAuthStore().profile.avatar;
+              profile.value.balance = useAuthStore().profile.balance;
 
               console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
             } else {
