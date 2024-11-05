@@ -12,8 +12,8 @@
       <ProfileServices :services="services" @service-selected="fetchServiceOptionsByService" />
 
       <ServiceDetails
-          :title="selectedService.value.name"
-          :text="selectedService.value.description"
+          :title="selectedService.name"
+          :text="selectedService.description"
           :serviceOptions="serviceOptions"
           @service-option-chosen=onServiceOptionChosen
       />
@@ -77,7 +77,7 @@ export default {
     const services = ref([]);
     const serviceOptions = ref([]);
     const showError = ref({ flag: false });
-    const selectedService = reactive({ value: null });
+    const selectedService = ref({ name: " ", description:" " });
 
 
     const canEdit = computed(() => useAuthStore().profile && useAuthStore().profile.username === props.username);
@@ -95,7 +95,6 @@ export default {
         }
         selectedService.value = services.value.find((service) => service.id === serviceId);
         console.log(services.value.find((service) => service.id === serviceId));
-        console.log('dawdawd');
       } catch (error) {
         console.error("Error fetching services:", error);
       }

@@ -30,11 +30,11 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
     },
     text: {
       type: String,
-      required: true,
+      required: false,
     },
     serviceOptions: {
       type: Array,
