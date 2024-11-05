@@ -7,8 +7,6 @@
       <div class="flex items-center space-x-4 mb-4">
         <img src="https://static-oss.epal.gg/data/static/v2/img10_v2_LeagueofLegends.png" alt="Game Image" class="w-12 h-12 rounded-md" />
         <div>
-          <h2 class="text-lg font-semibold text-purple-50">League of Legends</h2>
-          <p class="text-gray-500 text-sm">E-Pal CEO Brian</p>
           <h2 class="text-lg font-semibold text-purple-50">{{ title }}</h2>
           <p class="text-gray-500 text-sm">{{ description }}</p>
         </div>
