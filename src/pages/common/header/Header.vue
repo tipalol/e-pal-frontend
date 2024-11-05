@@ -31,7 +31,7 @@
 
         <p class="font-semibold text-gray-300 hover:text-white">
           {{profile.balance}}</p>
-        <img src="./assets/money2.svg"
+        <img src="./assets/money1.svg"
              :style="{ width: '30px', height: '30px'}" />
       </div>
       <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
