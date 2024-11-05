@@ -33,7 +33,9 @@
               :id="selectedService.value.id"
               :title="selectedService.value.name"
               :description="selectedService.value.description"
-              @close="showModal = false" />
+              @close="showModal = false"
+              @confirm-order="onConfirmOrder"
+  />
 </template>
 
 <script>
@@ -46,6 +48,7 @@ import ProfileActions from "./components/ProfileActions.vue";
 import { useAuthStore } from "../../stores/auth.js";
 import Error from "../common/Error.vue";
 import OrderModal from "./components/OrderModal.vue";
+import axios from "axios";
 
 export default {
   components: { OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
@@ -129,6 +132,28 @@ export default {
       this.selectedService.value = service;
       console.log(this.selectedService)
       this.showModal = true;
+    },
+    async onConfirmOrder() {
+      console.log("Confirmed order: " + this.selectedService);
+      try {
+        const token = useAuthStore().token;
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+        const response = await axios.post("http://localhost:5033/api/orders", {
+          serviceOptionId: this.selectedService.value.id
+        }, config);
+
+        if (response.status === 200)
+        {
+          console.log("Confirmed order successful:", response.data);
+        }
+        else {
+          console.error("Error during Confirmed order: ", response.data);
+        }
+      } catch (error) {
+        console.error("Error Confirmed order:", error);
+      }
     }
   }
 };
