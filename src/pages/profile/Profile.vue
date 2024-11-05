@@ -1,21 +1,20 @@
 <template>
-  <div class="min-h-screen bg-gray-900 text-white">
+  <div v-if="!showError.flag" class="min-h-screen bg-gray-900 text-white">
     <Header />
-
     <ProfileBanner
         :username="profile.username"
         :avatar="profile.avatar"
         :languages="profile.languages"
         :gender="profile.gender"
+        :can-edit="canEdit"
     />
-
     <div class="flex space-x-8 px-8 py-6">
-      <ProfileServices :services="services" />
+      <ProfileServices :categories="categories" @category-selected="fetchServicesByCategory" />
 
       <ServiceDetails
-          :title="serviceDetails.title"
-          :text="serviceDetails.text"
-          :serviceTypes="serviceDetails.types"
+          :title="'Крч тут будет карта, надо класс хуярить'"
+          :text="'А тут ее описание'"
+          :services="services"
       />
 
       <ProfileActions
@@ -24,24 +23,40 @@
       />
     </div>
   </div>
+  <Error v-if="showError.flag"
+         button-url="/"
+         title="Error"
+         message="Something goes wrong.."
+  />
+  <OrderModal v-if="showModal" @close="showModal = false" />
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Header from "../common/header/Header.vue";
 import ProfileBanner from "./components/Banner.vue";
 import ProfileServices from "./components/ProfileServices.vue";
 import ServiceDetails from "./components/ServiceDetails.vue";
 import ProfileActions from "./components/ProfileActions.vue";
-import {useAuthStore} from "../../stores/auth.js";
-import {useRouter} from "vue-router";
+import { useAuthStore } from "../../stores/auth.js";
+import Error from "../common/Error.vue";
+import OrderModal from "./components/OrderModal.vue";
 
 export default {
-  name: "UserProfile",
-  components: {ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
-
-  setup() {
-    const router = useRouter();
+  components: { OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
+  props: {
+    username: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      showModal: false,
+      name: "Profile",
+    }
+  },
+  setup(props) {
     const profile = ref({
       id: "4363236",
       username: "dopameanie",
@@ -49,77 +64,50 @@ export default {
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
     });
-    const logOut = () => {
-      useAuthStore().clearToken();
-      useAuthStore().clearProfile();
-      console.log("Logged out");
-    };
-    const serviceTypes = ref([
-      {
-        id: "",
-        name: "",
-        avatar: ""
-      }
-    ]);
-    const services = ref([
-      {
-        id: "",
-        name: "",
-        avatar: "",
-        price: 100.5,
-        serviceTypeId: ""
-      }
-    ]);
+    const categories = ref([]);
+    const services = ref([]);
+    const showError = ref({ flag: false });
 
-    onMounted(async () => {
-      // Проверка токена
-      if (!useAuthStore().isLoggedIn) {
-        console.log("redirect");
-        logOut();
-        router.push('/'); // Перенаправьте на главную страницу, если токен недействителен
-        return;
-      }
+    const canEdit = computed(() => useAuthStore().profile && useAuthStore().profile.username === props.username);
 
-      const headers = { 'Authorization': 'Bearer ' + useAuthStore().token };
+    const fetchServicesByCategory = async (categoryId) => {
+      const headers = { Authorization: "Bearer " + useAuthStore().token };
       try {
-        const response = await fetch("http://localhost:5033/api/profile", { headers });
+        const response = await fetch(`http://localhost:5033/api/serviceoptions/${profile.value.id}/service/${categoryId}`, { headers });
         if (response.ok) {
           const data = await response.json();
-
-          profile.value = data.data;
-          useAuthStore().setProfile(profile.value);
-
-          console.log('Got profile: ' + profile.value.id + profile.value.username + profile.value.status + profile.value.languages + profile.value.avatar);
+          services.value = data.data;
+          console.log("Updated services:", services.value);
         } else {
+          console.error("Failed to fetch services for category:", categoryId);
+        }
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+
+    onMounted(async () => {
+      const headers = { Authorization: "Bearer " + useAuthStore().token };
+      try {
+        const response = await fetch("http://localhost:5033/api/profile/" + props.username, { headers });
+        if (response.ok) {
+          const data = await response.json();
+          profile.value = data.data;
+          useAuthStore().setProfile(profile);
+        } else {
+          showError.value = { flag: true };
           console.error("Failed to fetch profile data");
         }
       } catch (error) {
+        showError.value = { flag: true };
         console.error("Error fetching profile data:", error);
       }
 
       try {
-        const response = await fetch("http://localhost:5033/api/services/"+ profile.value.id + "/categories", { headers });
+        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, { headers });
         if (response.ok) {
           const data = await response.json();
-
-          serviceTypes.value = data.data;
-
-          console.log('Got service types: ' + serviceTypes.value[0].id);
-        } else {
-          console.error("Failed to fetch service types");
-        }
-      } catch (error) {
-        console.error("Error fetching service types:", error);
-      }
-
-      try {
-        const response = await fetch("http://localhost:5033/api/services/"+ profile.value.id + "/category/" + serviceTypes.value[0].id, { headers });
-        if (response.ok) {
-          const data = await response.json();
-
-          services.value = data.data;
-
-          console.log('Got services: ' + services.value[0].name);
+          categories.value = data.data;
         } else {
           console.error("Failed to fetch services");
         }
@@ -128,26 +116,7 @@ export default {
       }
     });
 
-    return { profile };
-  },
-  data() {
-    return {
-      services: [
-        { name: "Adding Socials", price: "66.66 / Time", icon: "https://static-oss.epal.gg/data/static/v3/img7_card_AddingSocials_m.png" },
-        { name: "E-Chat", price: "66.66 / Time", icon: "https://static-oss.epal.gg/data/static/v3/img7_card_E-Chat_m.png" },
-        { name: "Dead by Daylight", price: "6.66 / Game", icon: "https://static-oss.epal.gg/data/static/v2/img7_v2_card_DeadbyDaylight_m.png" },
-      ],
-      serviceDetails: {
-        title: "E-Chat",
-        text: "Indulge in a personal voice call or texting session on Discord with dopa",
-        types: [
-          { name: "text chat w dopa", price: "66.66 / Time" },
-          { name: "voice call w dopa", price: "66.66 / 15Min" },
-          { name: "asmr sleep call w dopa", price: "666.66 / 15Min" },
-          { name: "daily dose of dopa", price: "76.66 / Time" },
-        ],
-      },
-    };
+    return { profile, canEdit, showError, categories, services, fetchServicesByCategory };
   },
 };
 </script>

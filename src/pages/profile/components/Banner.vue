@@ -13,14 +13,15 @@
         <a href="#" class="text-white">Wish</a>
         <a href="#" class="text-white">Feeds</a>
       </div>
-      <router-link class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white" to="/profile/settings">
+      <router-link v-if="canEdit" class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white" to="/profile/settings">
         Edit Profile
       </router-link>
     </div>
   </section>
 </template>
+
 <script>
-import { computed } from "vue";
+import {computed} from "vue";
 
 export default {
   name: "ProfileBanner",
@@ -42,6 +43,10 @@ export default {
       default: "--",
       required: false,
     },
+    canEdit: {
+      type: Boolean,
+      required: true
+    }
   },
   setup(props) {
     // Определяем цвет текста в зависимости от пола
