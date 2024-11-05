@@ -15,6 +15,7 @@
           :title="'Крч тут будет карта, надо класс хуярить'"
           :text="'А тут ее описание'"
           :services="services"
+          @service-chosen=onServiceChosen
       />
 
       <ProfileActions
@@ -28,7 +29,11 @@
          title="Error"
          message="Something goes wrong.."
   />
-  <OrderModal v-if="showModal" @close="showModal = false" />
+  <OrderModal v-if="showModal"
+              :id="selectedService.value.id"
+              :title="selectedService.value.name"
+              :description="selectedService.value.description"
+              @close="showModal = false" />
 </template>
 
 <script>
@@ -54,6 +59,7 @@ export default {
     return {
       showModal: false,
       name: "Profile",
+      selectedService: ref({})
     }
   },
   setup(props) {
@@ -118,5 +124,12 @@ export default {
 
     return { profile, canEdit, showError, categories, services, fetchServicesByCategory };
   },
+  methods: {
+    onServiceChosen(service) {
+      this.selectedService.value = service;
+      console.log(this.selectedService)
+      this.showModal = true;
+    }
+  }
 };
 </script>

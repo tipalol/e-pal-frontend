@@ -14,7 +14,8 @@
       <div
           v-for="(type, index) in services"
           :key="index"
-          class="flex items-center justify-between bg-gray-700 p-3 rounded-md"
+          @click="this.$emit('service-chosen', type)"
+          class="flex items-center justify-between bg-gray-700 p-3 rounded-md cursor-pointer"
       >
         <span>{{ type.name }}</span>
         <span class="text-purple-500">{{ type.price }}</span>
