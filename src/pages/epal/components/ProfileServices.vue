@@ -45,6 +45,9 @@ export default {
         console.log("Selected first category ID:", selectedCategoryId.value);
         emit("category-selected", selectedCategoryId.value); // Отправляем событие с ID первой категории
       }
+      else {
+        console.log("No service categories", props.categories);
+      }
     });
 
     const selectCategory = (categoryId) => {

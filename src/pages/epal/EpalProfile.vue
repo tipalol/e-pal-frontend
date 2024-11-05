@@ -15,6 +15,7 @@
           :title="'Крч тут будет карта, надо класс хуярить'"
           :text="'А тут ее описание'"
           :services="services"
+          @service-chosen=onServiceChosen
       />
 
       <ProfileActions
@@ -28,7 +29,11 @@
          title="Error"
          message="Something goes wrong.."
   />
-  <OrderModal v-if="showModal" @close="showModal = false" />
+  <OrderModal v-if="showModal"
+              :id="selectedService.value.id"
+              :title="selectedService.value.name"
+              :description="selectedService.value.description"
+              @close="showModal = false" />
 </template>
 
 <script>
@@ -54,7 +59,8 @@ export default {
   },
   data() {
     return {
-      showModal: false
+      showModal: false,
+      selectedService: ref({})
     }
   },
   setup(props) {
@@ -73,7 +79,7 @@ export default {
     const fetchServicesByCategory = async (categoryId) => {
       const headers = { Authorization: "Bearer " + useAuthStore().token };
       try {
-        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}/category/${categoryId}`, { headers });
+        const response = await fetch(`http://localhost:5033/api/serviceoptions/${profile.value.id}/service/${categoryId}`, { headers });
         if (response.ok) {
           const data = await response.json();
           services.value = data.data;
@@ -117,5 +123,12 @@ export default {
 
     return { profile, canEdit, showError, categories, services, fetchServicesByCategory };
   },
+  methods: {
+    onServiceChosen(service) {
+      this.selectedService.value = service;
+      console.log(this.selectedService)
+      this.showModal = true;
+    }
+  }
 };
 </script>
