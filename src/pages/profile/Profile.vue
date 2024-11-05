@@ -12,10 +12,10 @@
       <ProfileServices :services="services" @service-selected="fetchServiceOptionsByService" />
 
       <ServiceDetails
-          :title="'Крч тут будет карта, надо класс хуярить'"
-          :text="'А тут ее описание'"
+          :title="selectedService.value.name"
+          :text="selectedService.value.description"
           :serviceOptions="serviceOptions"
-          @service-chosen=onServiceChosen
+          @service-option-chosen=onServiceOptionChosen
       />
 
       <ProfileActions
@@ -30,16 +30,16 @@
          message="Something goes wrong.."
   />
   <OrderModal v-if="showModal"
-              :id="selectedService.value.id"
-              :title="selectedService.value.name"
-              :description="selectedService.value.description"
+              :id="selectedServiceOption.value.id"
+              :title="selectedServiceOption.value.name"
+              :description="selectedServiceOption.value.description"
               @close="showModal = false"
               @confirm-order="onConfirmOrder"
   />
 </template>
 
 <script>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, reactive } from "vue";
 import Header from "../common/header/Header.vue";
 import ProfileBanner from "./components/Banner.vue";
 import ProfileServices from "./components/ProfileServices.vue";
@@ -62,7 +62,7 @@ export default {
     return {
       showModal: false,
       name: "Profile",
-      selectedService: ref({})
+      selectedServiceOption: ref({}),
     }
   },
   setup(props) {
@@ -77,6 +77,8 @@ export default {
     const services = ref([]);
     const serviceOptions = ref([]);
     const showError = ref({ flag: false });
+    const selectedService = reactive({ value: null });
+
 
     const canEdit = computed(() => useAuthStore().profile && useAuthStore().profile.username === props.username);
 
@@ -91,6 +93,9 @@ export default {
         } else {
           console.error("Failed to fetch services for category:", serviceId);
         }
+        selectedService.value = services.value.find((service) => service.id === serviceId);
+        console.log(services.value.find((service) => service.id === serviceId));
+        console.log('dawdawd');
       } catch (error) {
         console.error("Error fetching services:", error);
       }
@@ -131,23 +136,23 @@ export default {
       }
     });
 
-    return { profile, canEdit, showError, serviceOptions, services, fetchServiceOptionsByService };
+    return { profile, canEdit, showError, serviceOptions, selectedService, services, fetchServiceOptionsByService };
   },
   methods: {
-    onServiceChosen(service) {
-      this.selectedService.value = service;
-      console.log(this.selectedService)
+    onServiceOptionChosen(serviceOption) {
+      this.selectedServiceOption.value = serviceOption;
+      console.log(this.selectedServiceOption)
       this.showModal = true;
     },
     async onConfirmOrder() {
-      console.log("Confirmed order: " + this.selectedService);
+      console.log("Confirmed order: " + this.selectedServiceOption);
       try {
         const token = useAuthStore().token;
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
         const response = await axios.post("http://localhost:5033/api/orders", {
-          serviceOptionId: this.selectedService.value.id
+          serviceOptionId: this.selectedServiceOption.value.id
         }, config);
 
         if (response.status === 200)
