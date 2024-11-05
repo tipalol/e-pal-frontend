@@ -44,9 +44,9 @@ export default {
       };
       const response = await axios.post("http://localhost:5033/api/profile/username?username=" + this.username, {}, config);
 
-      if (response.data)
+      if (response.status === 200)
       {
-        console.log("Edit profile successful:", response.data);
+        console.log("Edit profile successful");
 
         const token = useAuthStore().token;
         const config = {
