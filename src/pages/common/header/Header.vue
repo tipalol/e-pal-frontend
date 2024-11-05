@@ -95,7 +95,7 @@ export default {
       {
         return "/registration";
       }
-      console.log("/profile/" + useAuthStore().profile.username);
+
       return "/profile/" + useAuthStore().profile.username;
     }
   }
