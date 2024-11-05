@@ -116,7 +116,7 @@ export default {
               return;
             }
             console.log("Login successful:", response.data);
-            this.$emit("login-success", response.data);
+            this.$emit("login-success", response.data.token);
           } catch (error) {
             this.error = "Error during login. Please try again.";
             console.error("Error during login:", error);

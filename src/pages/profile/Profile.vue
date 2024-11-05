@@ -6,7 +6,7 @@
         :avatar="profile.avatar"
         :languages="profile.languages"
         :gender="profile.gender"
-        :can-edit="canEdit"
+        :can-edit="profile.isMyProfile"
     />
     <div class="flex space-x-8 px-8 py-6">
       <ProfileServices :categories="categories" @category-selected="fetchServicesByCategory" />
@@ -72,6 +72,7 @@ export default {
       status: "Created",
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
+      isMyProfile: false
     });
     const categories = ref([]);
     const services = ref([]);
@@ -102,7 +103,12 @@ export default {
         if (response.ok) {
           const data = await response.json();
           profile.value = data.data;
-          useAuthStore().setProfile(profile);
+
+          if (profile.value.isMyProfile)
+          {
+            useAuthStore().setProfile(profile);
+          }
+
         } else {
           showError.value = { flag: true };
           console.error("Failed to fetch profile data");
