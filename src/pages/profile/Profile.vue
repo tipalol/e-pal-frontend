@@ -9,12 +9,12 @@
         :can-edit="canEdit"
     />
     <div class="flex space-x-8 px-8 py-6">
-      <ProfileServices :categories="categories" @category-selected="fetchServicesByCategory" />
+      <ProfileServices :services="services" @service-selected="fetchServiceOptionsByService" />
 
       <ServiceDetails
           :title="'Крч тут будет карта, надо класс хуярить'"
           :text="'А тут ее описание'"
-          :services="services"
+          :serviceOptions="serviceOptions"
           @service-chosen=onServiceChosen
       />
 
@@ -73,22 +73,22 @@ export default {
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
     });
-    const categories = ref([]);
     const services = ref([]);
+    const serviceOptions = ref([]);
     const showError = ref({ flag: false });
 
     const canEdit = computed(() => useAuthStore().profile && useAuthStore().profile.username === props.username);
 
-    const fetchServicesByCategory = async (categoryId) => {
+    const fetchServiceOptionsByService = async (serviceId) => {
       const headers = { Authorization: "Bearer " + useAuthStore().token };
       try {
-        const response = await fetch(`http://localhost:5033/api/serviceoptions/${profile.value.id}/service/${categoryId}`, { headers });
+        const response = await fetch(`http://localhost:5033/api/serviceoptions/${profile.value.id}/service/${serviceId}`, { headers });
         if (response.ok) {
           const data = await response.json();
-          services.value = data.data;
-          console.log("Updated services:", services.value);
+          serviceOptions.value = data.data;
+          console.log("Updated services:", serviceOptions.value);
         } else {
-          console.error("Failed to fetch services for category:", categoryId);
+          console.error("Failed to fetch services for category:", serviceId);
         }
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -116,7 +116,7 @@ export default {
         const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, { headers });
         if (response.ok) {
           const data = await response.json();
-          categories.value = data.data;
+          services.value = data.data;
         } else {
           console.error("Failed to fetch services");
         }
@@ -125,7 +125,7 @@ export default {
       }
     });
 
-    return { profile, canEdit, showError, categories, services, fetchServicesByCategory };
+    return { profile, canEdit, showError, serviceOptions, services, fetchServiceOptionsByService };
   },
   methods: {
     onServiceChosen(service) {

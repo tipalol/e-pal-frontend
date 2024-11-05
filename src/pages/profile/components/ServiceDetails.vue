@@ -10,9 +10,9 @@
 
     <!-- Service Types -->
     <div class="bg-gray-800 p-6 rounded-lg space-y-4">
-      <h3 class="text-lg font-semibold"> Services • {{ services.length }}</h3>
+      <h3 class="text-lg font-semibold"> Services • {{ serviceOptions.length }}</h3>
       <div
-          v-for="(type, index) in services"
+          v-for="(type, index) in serviceOptions"
           :key="index"
           @click="this.$emit('service-chosen', type)"
           class="flex items-center justify-between bg-gray-700 p-3 rounded-md cursor-pointer"
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  name: "services",
+  name: "serviceOptions",
   props: {
     title: {
       type: String,
@@ -36,7 +36,7 @@ export default {
       type: String,
       required: true,
     },
-    services: {
+    serviceOptions: {
       type: Array,
       required: true,
     },
