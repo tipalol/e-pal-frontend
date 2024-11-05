@@ -5,7 +5,7 @@
       <nav class="hidden md:flex space-x-4">
         <a href="#" class="text-gray-300 hover:text-white text-[20px] font-menu">Play</a>
         <router-link href="#" class="text-gray-300 hover:text-white font-menu  text-[20px]" to="/">ePals</router-link>
-        <a href="#" class="text-gray-300 hover:text-white font-menu  text-[20px]">Community</a>
+        <router-link href="#" class="text-gray-300 hover:text-white font-menu  text-[20px]" to="/orders">Orders</router-link>
       </nav>
     </div>
     <div v-if="!token.jwt" class="flex items-center space-x-4">
@@ -49,7 +49,6 @@ export default {
       if (useAuthStore().isLoggedIn)
       {
         token.value.jwt = useAuthStore().token;
-        console.log('Token: ' + token.value.jwt)
 
         if (useAuthStore().profile)
         {
