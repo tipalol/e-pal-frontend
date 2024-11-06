@@ -51,6 +51,8 @@ import { useAuthStore } from "../../stores/auth.js";
 import Error from "../common/Error.vue";
 import OrderModal from "./components/OrderModal.vue";
 import axios from "axios";
+import { watch } from 'vue';
+import {useRoute} from "vue-router";
 
 export default {
   components: { OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
@@ -68,6 +70,13 @@ export default {
     }
   },
   setup(props) {
+
+    const route = useRoute();
+
+    watch(() => route.params.username, async (newUsername) => {
+      window.location.reload();
+    });
+
     const profile = ref({
       id: "4363236",
       username: "dopameanie",
@@ -105,23 +114,23 @@ export default {
 
     onMounted(async () => {
       const headers = { Authorization: "Bearer " + useAuthStore().token };
-      try {
-        const response = await fetch("http://localhost:5033/api/profile/" + props.username, { headers });
-        if (response.ok) {
-          const data = await response.json();
-          profile.value = data.data;
+        try {
+          const response = await fetch("http://localhost:5033/api/profile/" + props.username, { headers });
+          if (response.ok) {
+            const data = await response.json();
+            profile.value = data.data;
 
-          if (profile.value.isMyProfile)
-          {
-            useAuthStore().setProfile(profile);
+            if (profile.value.isMyProfile)
+            {
+              useAuthStore().setProfile(profile);
+            }
+          } else {
+            showError.value = { flag: true };
+            console.error("Failed to fetch profile data");
           }
-        } else {
+        } catch (error) {
           showError.value = { flag: true };
-          console.error("Failed to fetch profile data");
-        }
-      } catch (error) {
-        showError.value = { flag: true };
-        console.error("Error fetching profile data:", error);
+          console.error("Error fetching profile data:", error);
       }
 
       try {
