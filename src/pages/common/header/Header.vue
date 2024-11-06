@@ -26,15 +26,17 @@
         <img :src="profile.avatar" alt="User Avatar" class="w-[24px] h-[24px] rounded-full" />
       </router-link>
       <div class="flex items-center space-x-1">
-        <p class="font-semibold text-gray-300 hover:text-white">
-          balance:</p>
+        <p class="font-semibold text-gray-300 hover:text-white mr-1">
+          |</p>
 
         <p class="font-semibold text-gray-300 hover:text-white">
           {{profile.balance}}</p>
-        <img src="./assets/money2.svg"
+        <img src="./assets/money1.svg"
              :style="{ width: '30px', height: '30px'}" />
       </div>
-      <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
+      <router-link to="/">
+        <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
+      </router-link>
     </div>
   </header>
 </template>
@@ -48,7 +50,7 @@ export default {
   setup() {
     const profile = ref({
       username: "",
-      balance: 0,
+      balance: 0.0,
       avatar: ""
     });
     const token = ref({

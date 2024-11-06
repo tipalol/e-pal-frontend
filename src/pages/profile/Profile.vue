@@ -2,8 +2,10 @@
   <div v-if="!showError.flag" class="min-h-screen bg-gray-900 text-white">
     <Header />
     <ProfileBanner
+        v-if="profile.username !== null"
         :username="profile.username"
         :avatar="profile.avatar"
+        :ProfileType="profile.profileType"
         :languages="profile.languages"
         :gender="profile.gender"
         :can-edit="profile.isMyProfile"
@@ -70,6 +72,7 @@ export default {
       id: "4363236",
       username: "dopameanie",
       status: "Created",
+      profileType: "base",
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
       isMyProfile: false
@@ -112,7 +115,6 @@ export default {
           {
             useAuthStore().setProfile(profile);
           }
-
         } else {
           showError.value = { flag: true };
           console.error("Failed to fetch profile data");
