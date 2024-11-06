@@ -11,13 +11,21 @@
         :can-edit="profile.isMyProfile"
     />
     <div class="flex space-x-8 px-8 py-6">
-      <ProfileServices :services="services" :is-my-profile="profile.isMyProfile" @service-selected="fetchServiceOptionsByService" />
+      <ProfileServices
+          :services="services"
+          :is-my-profile="profile.isMyProfile"
+          @service-selected="fetchServiceOptionsByService"
+          @service-updated ="fetchService"
+      />
 
       <ServiceDetails
           :title="selectedService.name"
           :text="selectedService.description"
           :serviceOptions="serviceOptions"
+          :service-id="selectedService.id"
+          :is-my-profile="profile.isMyProfile"
           @service-option-chosen=onServiceOptionChosen
+          @service-option-updated="fetchServiceOptionsByService"
       />
 
       <ProfileActions
@@ -94,6 +102,21 @@ export default {
 
     const canEdit = computed(() => useAuthStore().profile && useAuthStore().profile.username === props.username);
 
+    const fetchService = async () => {
+      const headers = { Authorization: "Bearer " + useAuthStore().token };
+      try {
+        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, { headers });
+        if (response.ok) {
+          const data = await response.json();
+          services.value = data.data;
+        } else {
+          console.error("Failed to fetch services");
+        }
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+
     const fetchServiceOptionsByService = async (serviceId) => {
       const headers = { Authorization: "Bearer " + useAuthStore().token };
       try {
@@ -146,7 +169,7 @@ export default {
       }
     });
 
-    return { profile, canEdit, showError, serviceOptions, selectedService, services, fetchServiceOptionsByService };
+    return { profile, canEdit, showError, serviceOptions, selectedService, services, fetchServiceOptionsByService, fetchService };
   },
   methods: {
     onServiceOptionChosen(serviceOption) {

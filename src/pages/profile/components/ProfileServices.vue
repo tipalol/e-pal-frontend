@@ -27,7 +27,7 @@
   </aside>
 
   <!-- Modal -->
-  <div v-if="isModalVisible" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50" @click.self="closeModal">
+  <div v-if="isModalVisible" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-white p-8 rounded-lg text-center max-w-sm w-full">
       <h2 class="text-3xl font-bold text-purple-600">Add new service</h2>
 
@@ -126,7 +126,11 @@ export default {
 
       } catch (error) {
 
-        console.error("Error fetching profile data:", error);
+        console.error("Post service error: ", error);
+      }
+      finally {
+        this.$emit("service-updated"); // Emit an event to parent
+        this.closeModal();
       }
     },
     toggleDropdown() {
