@@ -8,6 +8,7 @@ import EpalProfile from "./pages/profile/Profile.vue";
 import Categories from "./pages/categories/Categories.vue";
 import Orders from "./pages/orders/Orders.vue";
 import MySpace from "./pages/my-space/MySpace.vue";
+import Order from "./pages/order/Order.vue";
 
 const routes = [
     { path: '/', component: MainPage },
@@ -18,6 +19,7 @@ const routes = [
     { path: '/catalog/:id', component: ServicePage, props: true },
     { path: '/profile/:username', component: EpalProfile, props: true },
     { path: '/orders', component: Orders },
+    { path: '/orders/:id', component: Order, props: true },
     { path: '/space', component: MySpace },
 ];
 

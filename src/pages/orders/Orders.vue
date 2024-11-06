@@ -38,7 +38,7 @@
             'text-gray-400': selectedStatus !== status,
           }"
             @click="selectedStatus = status"
-            class="block text-left px-4 py-2 rounded-md hover:bg-gray-700"
+            class="block text-left px-4 py-2 rounded-md hover:bg-gray-700 w-[128px]"
         >
           {{ status }}
         </button>
@@ -51,6 +51,8 @@
           v-for="(order, index) in orders"
           :key="index"
           :order="order"
+          @click="onOrderClick(order.id)"
+          class="cursor-pointer hover:bg-gray-600"
       />
     </main>
   </div>
@@ -59,43 +61,43 @@
 <script>
 import OrderCard from './components/OrderCard.vue';
 import Header from "../common/header/Header.vue";
+import {onMounted, ref} from "vue";
+import {useAuthStore} from "../../stores/auth.js";
 
 export default {
   name: "Orders",
   components: {Header, OrderCard },
+  setup() {
+    const orders = ref([]);
+
+    onMounted(async () => {
+      const headers = { Authorization: "Bearer " + useAuthStore().token };
+      try {
+        const response = await fetch("http://localhost:5033/api/orders", { headers });
+        if (response.ok) {
+          orders.value = await response.json();
+        } else {
+          console.error("Failed to fetch orders data");
+        }
+      } catch (error) {
+        console.error("Error fetching orders data:", error);
+      }
+    });
+
+    return { orders };
+  },
   data() {
     return {
       activeTab: 'Seller',
-      selectedStatus: 'Completed',
+      selectedStatus: 'Pending',
       statuses: ['Pending', 'Completed', 'In Dispute', 'Canceled'],
-      orders: [
-        {
-          user: 'Lester Heng',
-          game: 'League of Legends',
-          created: 'Jul 20, 2021 5:33 PM',
-          price: '2.00',
-          status: 'Completed',
-        },
-        {
-          user: 'Kaitou',
-          game: 'League of Legends',
-          created: 'Mar 23, 2021 12:04 PM',
-          price: '4.00',
-          status: 'Completed',
-        },
-        {
-          user: 'epa*****@outlook.com',
-          game: 'League of Legends',
-          created: 'Jul 24, 2020 10:23 PM',
-          price: '2.36',
-          status: 'Completed',
-        },
-      ],
     };
   },
+  methods: {
+    onOrderClick(orderId) {
+      console.log("Order click: " + orderId);
+      this.$router.push("/orders/" + orderId);
+    }
+  }
 };
 </script>
-
-<style scoped>
-/* Custom styling if needed */
-</style>
