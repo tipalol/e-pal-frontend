@@ -11,7 +11,7 @@
         :can-edit="profile.isMyProfile"
     />
     <div class="flex space-x-8 px-8 py-6">
-      <ProfileServices :services="services" @service-selected="fetchServiceOptionsByService" />
+      <ProfileServices :services="services" :is-my-profile="profile.isMyProfile" @service-selected="fetchServiceOptionsByService" />
 
       <ServiceDetails
           :title="selectedService.name"
