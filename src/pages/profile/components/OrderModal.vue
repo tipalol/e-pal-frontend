@@ -46,7 +46,7 @@
 
       <div class="flex justify-between">
         <button @click="closeModal" class="px-4 py-2 bg-gray-700 text-gray-300  rounded-md">Cancel</button>
-        <button @click="confirmOrder" class="px-4 py-2 bg-purple-500 text-white rounded-md">Confirm</button>
+        <button @click="confirmOrder" class="px-4 py-2 bg-purple-500 hover:bg-purple-600  text-white rounded-md">Confirm</button>
       </div>
     </div>
   </div>

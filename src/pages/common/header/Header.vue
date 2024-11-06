@@ -9,12 +9,12 @@
       </nav>
     </div>
     <div v-if="!token.jwt" class="flex items-center space-x-4">
-      <router-link class="font-semibold text-gray-300 bg-gray-700 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
+      <router-link class="font-semibold text-gray-300 bg-gray-700 hover:bg-gray-500 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
       <router-link class="font-semibold text-gray-300 hover:text-white" to="/registration">Log in</router-link>
-      <router-link class="font-semibold bg-purple-500 text-gray-300 px-4 py-2 rounded-lg" to="/registration">Sign Up</router-link>
+      <router-link class="font-semibold bg-purple-500 hover:bg-purple-600 text-gray-300 px-4 py-2 rounded-lg" to="/registration">Sign Up</router-link>
     </div>
     <div v-else class="flex items-center space-x-4">
-      <router-link class="font-semibold bg-gray-700 text-gray-300 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
+      <router-link class="font-semibold text-gray-300 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg" to="/becomeEpal">Become an ePal</router-link>
       <router-link
           :to=getProfileUrl()
       >
@@ -35,7 +35,7 @@
              :style="{ width: '30px', height: '30px'}" />
       </div>
       <router-link to="/">
-        <button @click="logOut" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
+        <button @click="logOut" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold px-4 py-2 rounded-lg">Log out</button>
       </router-link>
     </div>
   </header>

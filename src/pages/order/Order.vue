@@ -74,10 +74,10 @@
 
       <!-- Buttons -->
       <div class="flex justify-between">
-        <button class="bg-purple-500 text-white py-2 px-4 rounded-lg">
+        <button class="bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-lg">
           Tip
         </button>
-        <button class="bg-purple-500 text-white py-2 px-4 rounded-lg">
+        <button class="bg-purple-500 hover:bg-purple-600  text-white py-2 px-4 rounded-lg">
           Comment
         </button>
       </div>
