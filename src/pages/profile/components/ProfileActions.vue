@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-1/4 space-y-6">
+  <aside class="w-1/5 space-y-6">
     <div class="bg-gray-800 p-4 rounded-lg flex flex-col items-center">
       <img :src="avatar" alt="User Profile" class="w-24 h-24 rounded-full mb-4" />
       <h3 class="text-lg font-semibold">{{ username }}</h3>

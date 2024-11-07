@@ -10,7 +10,7 @@
         :gender="profile.gender"
         :can-edit="profile.isMyProfile"
     />
-    <div class="flex space-x-8 px-8 py-6">
+    <div class="container-fluid flex space-x-8 px-8 py-6 justify-center">
       <ProfileServices
           :services="services"
           :is-my-profile="profile.isMyProfile"
@@ -202,3 +202,9 @@ export default {
   }
 };
 </script>
+<style>
+.container-fluid {
+  max-width: 1632px; /* Устанавливаем максимальную ширину в 960 пикселей */
+  margin: 0 auto;  /* Центрируем контейнер */
+}
+</style>

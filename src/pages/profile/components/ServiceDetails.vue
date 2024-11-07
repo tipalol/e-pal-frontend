@@ -1,5 +1,5 @@
 <template>
-  <section class="w-2/5 space-y-6">
+  <section class="w-5/12 space-y-6">
 
     <!-- card -->
     <div class="bg-gray-800 p-6 rounded-lg space-y-4">
@@ -44,7 +44,8 @@
 
       <!-- Кнопка свернуть/развернуть -->
     <div class="flex justify-between items-center pt-4 text-purple-500"
-      v-if="Object.keys(displayInfo).length > 2">
+
+         v-if="Object.keys(displayInfo).length > 2">
       <button @click="toggleCollapse" class="text-sm font-bold hover:text-purple-600">
         {{ isCollapsed ? 'Collapse' : 'Expand' }}
       </button>
