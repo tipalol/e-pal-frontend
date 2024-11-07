@@ -15,10 +15,13 @@
         </button>
       </div>
       <!-- Кнопка редактирования -->
-      <button @click="openEditModal" class="ml-2 bg-blue-500 hover:bg-blue-600 rounded-full py-3 px-5">
-        Edit
-        <i class="fas fa-edit"></i>
-      </button>
+      <div v-if="isMyProfile">
+        <button @click="openEditModal" class="ml-2 bg-blue-500 hover:bg-blue-600 rounded-full py-3 px-5">
+          Edit
+          <i class="fas fa-edit"></i>
+        </button>
+      </div>
+
     </div>
     <!-- Изображение ранга (показывается, если photo не null) -->
     <img v-if="serviceExtraInfo.photo" :src="serviceExtraInfo.photo" alt="Service Image" class="w-full h-50 rounded-lg object-cover" />
@@ -306,13 +309,15 @@ export default {
       try {
         const headers = { Authorization: "Bearer " + useAuthStore().token };
         // Пример обновления на сервере
-        await axios.post("http://localhost:5033/api/services", {
+        const response1 = await axios.post("http://localhost:5033/api/services", {
           id: this.serviceId,
           name: this.editedServiceName,              //this may changed
           description: this.editedServiceDescription,//this may changed
           categoryId: this.serviceCategoryId,
         }, { headers });
-        await axios.post("http://localhost:5033/api/Services/ExtraInfo/" + this.serviceId, {
+        if (response1.data.success == false)
+          throw response1.data.Error
+        const response2 = await axios.post("http://localhost:5033/api/Services/ExtraInfo/" + this.serviceId, {
           ServiceId: this.serviceId,
           Rank: this.editedExtraInfo.rank,           //this may changed
           Photo : this.editedExtraInfo.photo,        //this may changed
@@ -321,6 +326,8 @@ export default {
           Platforms: this.editedExtraInfo.platforms, //this may changed
           Positions: this.editedExtraInfo.positions, //this may changed
         }, {headers})
+        if (response2.data.success == false)
+          throw response2.data.Error
 
         // Обновляем локальные данные после сохранения
 
@@ -330,6 +337,7 @@ export default {
         this.closeEditModal();
       } catch (error) {
         console.error("Update error:", error);
+        this.closeEditModal()
       }
       finally {
         this.$emit("service-updated"); // Emit an event to parent
@@ -374,7 +382,6 @@ export default {
     }
   },
   mounted() {
-
   },
   watch: {
     serviceId() {
