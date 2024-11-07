@@ -19,13 +19,16 @@
       />
 
       <ServiceDetails
-          :title="selectedService.name"
-          :serviceDescription="selectedService.description"
-          :serviceOptions="serviceOptions"
-          :service-id="selectedService.id"
-          :is-my-profile="profile.isMyProfile"
-          @service-option-chosen=onServiceOptionChosen
-          @service-option-updated="fetchServiceOptionsByService"
+          :serviceName = "selectedService.name"
+          :serviceDescription = "selectedService.description"
+          :serviceCategoryId = "selectedService.categoryId"
+          :serviceOptions = "serviceOptions"
+          :service-id = "selectedService.id"
+          :is-my-profile = "profile.isMyProfile"
+          @service-option-chosen = onServiceOptionChosen
+          @service-updated ="fetchService"
+          @service-option-updated = "fetchServiceOptionsByService"
+
       />
 
       <ProfileActions

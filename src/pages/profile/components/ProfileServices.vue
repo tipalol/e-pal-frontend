@@ -118,7 +118,7 @@ export default {
     async applyModal(){
       const headers = { Authorization: "Bearer " + useAuthStore().token };
       try {
-        const response = await axios.post("http://localhost:5033/api/services", {
+        await axios.post("http://localhost:5033/api/services", {
           name: this.serviceName,
           description: this.serviceDescription,
           categoryId: this.selectedCategory.id,
