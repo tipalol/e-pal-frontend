@@ -20,7 +20,7 @@
 
       <ServiceDetails
           :title="selectedService.name"
-          :text="selectedService.description"
+          :serviceDescription="selectedService.description"
           :serviceOptions="serviceOptions"
           :service-id="selectedService.id"
           :is-my-profile="profile.isMyProfile"
