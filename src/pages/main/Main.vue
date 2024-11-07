@@ -2,10 +2,12 @@
   <div class="bg-gray-900 text-white min-h-screen">
     <Header />
     <Banner :slides="slidesData" />
-    <div class="container-fluid space-y-16" style="padding-bottom:200px">
-      <MainServices :services="services" />
-      <NewbiesEpals />
-      <MoreEpals />
+    <div class="container-fluid space-y-16 bg-light" style="padding-bottom:200px">
+      <div>
+        <MainServices :services="services" />
+        <NewbiesEpals />
+        <MoreEpals />
+      </div>
     </div>
 
 
@@ -47,7 +49,7 @@ export default {
   methods: {
     async fetchServices() {
       try {
-        const response = await axios.get("http://localhost:5033/api/catalog/categories?take=10");
+        const response = await axios.get("http://localhost:5033/api/catalog/categories?take=50");
         this.services = response.data.data;
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -56,3 +58,9 @@ export default {
   },
 };
 </script>
+<style>
+.container-fluid {
+  max-width: 1632px; /* Устанавливаем максимальную ширину в 960 пикселей */
+  margin: 0 auto;  /* Центрируем контейнер */
+}
+</style>
