@@ -21,6 +21,7 @@ import MainServices from "./components/MainServices.vue";
 import axios from "axios";
 import MoreEpals from "./components/MoreEpals.vue";
 import NewbiesEpals from "./components/NewbiesEpals.vue";
+import {useAuthStore} from "../../stores/auth.js";
 
 export default {
   components: {NewbiesEpals, MoreEpals, MainServices, Banner, Header},
@@ -44,6 +45,7 @@ export default {
     };
   },
   async mounted() {
+    await useAuthStore().checkToken();
     await this.fetchServices();
   },
   methods: {

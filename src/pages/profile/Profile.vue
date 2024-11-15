@@ -86,12 +86,14 @@ export default {
     }
   },
   setup(props) {
+
     const connectToSignalR = () => {
       const connection = new signalR.HubConnectionBuilder()
           .withUrl("http://localhost:5033/socket") // URL вашего SignalR-хаба
           .build();
+      if (useAuthStore().isLoggedIn)
+        connection.start().catch(err => console.error("SignalR connection error:", err));
 
-      connection.start().catch(err => console.error("SignalR connection error:", err));
     };
     connectToSignalR();
 
