@@ -8,7 +8,8 @@
           [epal]
         </p>
       </div>
-
+      <p className="text-green-500" v-if="onlineStatus == true">Online</p>
+      <p className="text-gray-500" v-else>Offline</p>
       <!-- Gender color with pulsing effect -->
       <p :style="{ animation: `pulse 1.5s infinite`, color: genderTextColor }" class="text-sm text-xl">{{ gender }}</p>
       <p class="text-gray-400 text-sm">{{ languages }}</p>
@@ -65,6 +66,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    onlineStatus: {
+      type: Boolean,
+      required: false,
+    }
   },
   setup(props) {
     // Determine text color based on gender

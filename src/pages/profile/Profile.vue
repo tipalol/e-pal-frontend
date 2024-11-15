@@ -1,15 +1,19 @@
 <template>
   <div v-if="!showError.flag" class="min-h-screen bg-gray-900 text-white">
     <Header />
-    <ProfileBanner
-        v-if="profile.username !== null"
-        :username="profile.username"
-        :avatar="profile.avatar"
-        :ProfileType="profile.profileType"
-        :languages="profile.languages"
-        :gender="profile.gender"
-        :can-edit="profile.isMyProfile"
-    />
+    <div>
+      <ProfileBanner
+          v-if="profile.username !== null"
+          :username="profile.username"
+          :avatar="profile.avatar"
+          :ProfileType="profile.profileType"
+          :languages="profile.languages"
+          :gender="profile.gender"
+          :can-edit="profile.isMyProfile"
+          :online-status="profile.isOnline"
+      />
+    </div>
+
     <div class="container-fluid flex space-x-8 px-8 py-6 justify-center">
       <ProfileServices
           :services="services"
@@ -64,6 +68,7 @@ import OrderModal from "./components/OrderModal.vue";
 import axios from "axios";
 import { watch } from 'vue';
 import {useRoute} from "vue-router";
+import * as signalR from '@microsoft/signalr';
 
 export default {
   components: { OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
@@ -81,8 +86,17 @@ export default {
     }
   },
   setup(props) {
+    const connectToSignalR = () => {
+      const connection = new signalR.HubConnectionBuilder()
+          .withUrl("http://localhost:5033/socket") // URL вашего SignalR-хаба
+          .build();
+
+      connection.start().catch(err => console.error("SignalR connection error:", err));
+    };
+    connectToSignalR();
 
     const route = useRoute();
+
 
     watch(() => route.params.username, async (newUsername) => {
       window.location.reload();
@@ -92,23 +106,28 @@ export default {
       id: "4363236",
       username: "dopameanie",
       status: "Created",
+      isOnline: false,
       profileType: "base",
       avatar: "https://global-oss.epal.gg/data/album/729833/1724368151270586.jpeg?x-oss-process=image/resize,m_fill,w_256,h_256",
       languages: "日本語/English",
       isMyProfile: false
     });
+
+
+
+
     const services = ref([]);
     const serviceOptions = ref([]);
-    const showError = ref({ flag: false });
-    const selectedService = ref({ name: " ", description:" " });
+    const showError = ref({flag: false});
+    const selectedService = ref({name: " ", description: " "});
 
 
     const canEdit = computed(() => useAuthStore().profile && useAuthStore().profile.username === props.username);
 
     const fetchService = async () => {
-      const headers = { Authorization: "Bearer " + useAuthStore().token };
+      const headers = {Authorization: "Bearer " + useAuthStore().token};
       try {
-        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, { headers });
+        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, {headers});
         if (response.ok) {
           const data = await response.json();
           services.value = data.data;
@@ -121,9 +140,9 @@ export default {
     };
 
     const fetchServiceOptionsByService = async (serviceId) => {
-      const headers = { Authorization: "Bearer " + useAuthStore().token };
+      const headers = {Authorization: "Bearer " + useAuthStore().token};
       try {
-        const response = await fetch(`http://localhost:5033/api/serviceoptions/${profile.value.id}/service/${serviceId}`, { headers });
+        const response = await fetch(`http://localhost:5033/api/serviceoptions/${profile.value.id}/service/${serviceId}`, {headers});
         if (response.ok) {
           const data = await response.json();
           serviceOptions.value = data.data;
@@ -139,28 +158,27 @@ export default {
     };
 
     onMounted(async () => {
-      const headers = { Authorization: "Bearer " + useAuthStore().token };
-        try {
-          const response = await fetch("http://localhost:5033/api/profile/" + props.username, { headers });
-          if (response.ok) {
-            const data = await response.json();
-            profile.value = data.data;
+      const headers = {Authorization: "Bearer " + useAuthStore().token};
+      try {
+        const response = await fetch("http://localhost:5033/api/profile/" + props.username, {headers});
+        if (response.ok) {
+          const data = await response.json();
+          profile.value = data.data;
 
-            if (profile.value.isMyProfile)
-            {
-              useAuthStore().setProfile(profile);
-            }
-          } else {
-            showError.value = { flag: true };
-            console.error("Failed to fetch profile data");
+          if (profile.value.isMyProfile) {
+            useAuthStore().setProfile(profile);
           }
-        } catch (error) {
-          showError.value = { flag: true };
-          console.error("Error fetching profile data:", error);
+        } else {
+          showError.value = {flag: true};
+          console.error("Failed to fetch profile data");
+        }
+      } catch (error) {
+        showError.value = {flag: true};
+        console.error("Error fetching profile data:", error);
       }
 
       try {
-        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, { headers });
+        const response = await fetch(`http://localhost:5033/api/services/${profile.value.id}`, {headers});
         if (response.ok) {
           const data = await response.json();
           services.value = data.data;
@@ -172,7 +190,16 @@ export default {
       }
     });
 
-    return { profile, canEdit, showError, serviceOptions, selectedService, services, fetchServiceOptionsByService, fetchService };
+    return {
+      profile,
+      canEdit,
+      showError,
+      serviceOptions,
+      selectedService,
+      services,
+      fetchServiceOptionsByService,
+      fetchService
+    };
   },
   methods: {
     onServiceOptionChosen(serviceOption) {

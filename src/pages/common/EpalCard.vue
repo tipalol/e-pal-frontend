@@ -7,8 +7,13 @@
           class="w-16 h-16 rounded-full absolute -top-16 left-4 border-4 border-gray-900"
       />
 
-      <div class="absolute -top-4 left-16 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-900"></div>
-
+      <div
+          class="absolute -top-4 left-16 w-3 h-3 rounded-full border-2 border-gray-900"
+          :class="{
+      'bg-green-500': onlineStatus,
+      'bg-red-500': !onlineStatus
+    }"
+      ></div>
       <div class="mt-4">
         <div class="mt-8">
           <h3 class="font-semibold text-lg">{{ username }}</h3>
@@ -46,6 +51,10 @@ export default {
       required: true,
     },
     bio: {
+      type: String,
+      required: true,
+    },
+    onlineStatus:{
       type: String,
       required: true,
     },

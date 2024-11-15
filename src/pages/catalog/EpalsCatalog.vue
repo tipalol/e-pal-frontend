@@ -38,6 +38,7 @@
             :bio="user.bio"
             :avatar="user.avatar"
             :username="user.username"
+            :online-status="user.isOnlineZZ"
         />
 
       </div>
