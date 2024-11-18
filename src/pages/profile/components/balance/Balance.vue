@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center min-h-screen bg-gray-800 space-y-6 space-x-5 ">
+  <div class=" w-2/5 flex justify-center min-h-screen bg-gray-800 space-y-6 space-x-5 ">
     <div>
     <div class="bg-purple-800 ml-6 mr-6 rounded-2xl" >
       <!-- Главный блок с балансом -->

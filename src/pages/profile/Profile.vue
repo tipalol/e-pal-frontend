@@ -18,12 +18,16 @@
 
       <div class="container-fluid flex space-x-8 px-8 py-6 justify-center">
 
-        <ProfileServices
-            :services="services"
-            :is-my-profile="profile.isMyProfile"
-            @service-selected="fetchServiceOptionsByService"
-            @service-updated ="fetchService"
-        />
+        <div class="w-1/5">
+          <ProfileServices
+              v-if="activeTab === 'services'"
+              :services="services"
+              :is-my-profile="profile.isMyProfile"
+              @service-selected="fetchServiceOptionsByService"
+              @service-updated ="fetchService"
+          />
+        </div>
+
 
         <Balance v-if="activeTab === 'balance'"/>
 

@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-1/5 space-y-6">
+  <aside class=" space-y-6">
     <!-- Контейнер с цветом фона -->
     <div class="bg-gray-800 p-6 rounded-lg space-y-4">
       <div v-if="isMyProfile">
