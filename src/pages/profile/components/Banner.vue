@@ -21,6 +21,7 @@
         <a href="#" class="text-white">Album</a>
         <a href="#" class="text-white">Wish</a>
         <a href="#" class="text-white">Feeds</a>
+        <a href="/profile/balance" class="text-white">Balance</a>
       </div>
 
       <!-- Edit Profile Button -->

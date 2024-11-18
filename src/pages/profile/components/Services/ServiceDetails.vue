@@ -207,7 +207,7 @@
 </template>
 
 <script>
-import { useAuthStore } from "../../../stores/auth.js";
+import { useAuthStore } from "../../../../stores/auth.js";
 import axios from "axios";
 import {ref} from "vue";
 

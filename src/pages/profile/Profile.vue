@@ -59,12 +59,12 @@
 import { computed, onMounted, ref, reactive } from "vue";
 import Header from "../common/header/Header.vue";
 import ProfileBanner from "./components/Banner.vue";
-import ProfileServices from "./components/ProfileServices.vue";
-import ServiceDetails from "./components/ServiceDetails.vue";
-import ProfileActions from "./components/ProfileActions.vue";
+import ProfileServices from "./components/Services/ProfileServices.vue";
+import ServiceDetails from "./components/Services/ServiceDetails.vue";
+import ProfileActions from "./components/Services/ProfileActions.vue";
 import { useAuthStore } from "../../stores/auth.js";
 import Error from "../common/Error.vue";
-import OrderModal from "./components/OrderModal.vue";
+import OrderModal from "./components/Services/OrderModal.vue";
 import axios from "axios";
 import { watch } from 'vue';
 import {useRoute} from "vue-router";
