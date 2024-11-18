@@ -2,26 +2,25 @@
   <section class="w-5/12 space-y-6">
     <!-- card -->
     <div class="bg-gray-800 p-6 rounded-lg space-y-4">
-    <div class="flex items-center justify-between bg-gray">
-      <div class="flex flex-grow justify-start">
-        <div>
-          <h2 class="text-3xl font-bold">{{ localServiceName }}</h2>
-          <div class="text-yellow-500 text-lg font-bold">5.0 • 152 Served</div>
+      <div class="flex items-center justify-between bg-gray">
+        <div class="flex flex-grow justify-start">
+          <div>
+            <h2 class="text-3xl font-bold">{{ localServiceName }}</h2>
+            <div class="text-yellow-500 text-lg font-bold">5.0 • 152 Served</div>
+          </div>
         </div>
-      </div>
-      <div class="mr-0 bg-purple-500 hover:bg-purple-600 rounded-full py-3 px-5 flex items-center space-x-2">
-        <button>
-          <i class="fas fa-play"></i>
-        </button>
-      </div>
-      <!-- Кнопка редактирования -->
-      <div v-if="isMyProfile">
-        <button @click="openEditModal" class="ml-2 bg-blue-500 hover:bg-blue-600 rounded-full py-3 px-5">
-          Edit
-          <i class="fas fa-edit"></i>
-        </button>
-      </div>
-
+        <div class="mr-0 bg-purple-500 hover:bg-purple-600 rounded-full py-3 px-5 flex items-center space-x-2">
+          <button>
+            <i class="fas fa-play"></i>
+          </button>
+        </div>
+        <!-- Кнопка редактирования -->
+        <div v-if="isMyProfile">
+          <button @click="openEditModal" class="ml-2 bg-blue-500 hover:bg-blue-600 rounded-full py-3 px-5">
+            Edit
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
     </div>
     <!-- Изображение ранга (показывается, если photo не null) -->
     <img v-if="serviceExtraInfo.photo" :src="serviceExtraInfo.photo" alt="Service Image" class="w-full h-50 rounded-lg object-cover" />
@@ -60,7 +59,6 @@
 
     </div>
 
-
     <!-- Service Types -->
     <div class="bg-gray-800 p-6 rounded-lg space-y-4">
       <div class="flex">
@@ -82,22 +80,17 @@
         <span class="text-purple-500">{{ type.price }}</span>
       </div>
     </div>
-  </section>
-  <!-- Modal -->
-  <div v-if="isModalVisible" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50" >
-    <div class="bg-white p-8 rounded-lg text-center max-w-sm w-full">
-      <h2 class="text-3xl font-bold text-purple-600">Add new service details</h2>
-      <!-- Input Fields -->
-      <div class="mt-4 text-purple-600 ">
-        <label class="block text-gray-700">Service name</label>
-        <input v-model="detailsName" type="text" placeholder="Enter details name" class="w-full p-2 border border-gray-300 rounded">
-        <input v-model="price" type="number" placeholder="Enter price" class="w-full mt-1 p-2 border border-gray-300 rounded" step="0.1">
-      </div>
 
-      <button @click="applyModal" class="bg-green-500 mt-6 mr-2 text-white py-2 px-6 rounded-full">Apply</button>
-      <button @click="closeModal" class="mt-6 bg-black text-white py-2 px-6 rounded-full">Close</button>
-    </div>
-  </div>
+  </section>
+  <!-- Modal's -->
+  <!-- AddServiceDetailsModal -->
+  <AddServiceDetailsModal
+      v-if="isModalVisible"
+      :isVisible="isModalVisible"
+      :serviceId="serviceId"
+      @service-option-added="$emit('service-option-updated', serviceId)"
+      @close="closeModal"
+  />
 
   <!-- Modal для редактирования -->
   <div v-if="isEditModalVisible" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
@@ -197,7 +190,6 @@
         </div>
 
       </div>
-
       <button @click="applyEditModal" class="bg-green-500 mt-6 mr-2 text-white py-2 px-6 rounded-full">Save</button>
       <button @click="closeEditModal" class="mt-6 bg-black text-white py-2 px-6 rounded-full">Cancel</button>
     </div>
@@ -210,9 +202,14 @@
 import { useAuthStore } from "../../../../stores/auth.js";
 import axios from "axios";
 import {ref} from "vue";
+import AddServiceDetailsModal from './AddServiceDetailsModal.vue';
 
 export default {
   name: "serviceOptions",
+  components: {
+    AddServiceDetailsModal,
+  },
+
   props: {
     serviceName: {
       type: String,
