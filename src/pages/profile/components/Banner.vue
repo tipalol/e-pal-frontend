@@ -8,28 +8,24 @@
           [epal]
         </p>
       </div>
-      <p className="text-green-500" v-if="onlineStatus == true">Online</p>
-      <p className="text-gray-500" v-else>Offline</p>
+      <p class="text-green-500" v-if="onlineStatus == true">Online</p>
+      <p class="text-gray-500" v-else>Offline</p>
       <!-- Gender color with pulsing effect -->
       <p :style="{ animation: `pulse 1.5s infinite`, color: genderTextColor }" class="text-sm text-xl">{{ gender }}</p>
       <p class="text-gray-400 text-sm">{{ languages }}</p>
 
       <!-- Navigation Links -->
       <div class="flex justify-center space-x-6 mt-4">
-        <a href="#" class="text-white">Achievements</a>
-        <a href="#" class="text-white border-b-2 border-purple-500">Services</a>
-        <a href="#" class="text-white">Album</a>
-        <a href="#" class="text-white">Wish</a>
-        <a href="#" class="text-white">Feeds</a>
-        <a href="/profile/balance" class="text-white">Balance</a>
+        <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'achievements'}" @click="setActiveTab('achievements')">Achievements</a>
+        <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'services'}" @click="setActiveTab('services')">Services</a>
+        <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'album'}" @click="setActiveTab('album')">Album</a>
+        <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'wish'}" @click="setActiveTab('wish')">Wish</a>
+        <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'feeds'}" @click="setActiveTab('feeds')">Feeds</a>
+        <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'balance'}" @click="setActiveTab('balance')">Balance</a>
       </div>
 
       <!-- Edit Profile Button -->
-      <router-link
-          v-if="canEdit"
-          class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white"
-          to="/profile/settings"
-      >
+      <router-link v-if="canEdit" class="absolute top-4 right-4 bg-purple-600 py-1 px-3 rounded-full text-sm text-white" to="/profile/settings">
         Edit Profile
       </router-link>
     </div>
@@ -37,7 +33,7 @@
 </template>
 
 <script>
-import {computed} from "vue";
+import { computed, ref } from "vue";
 
 export default {
   name: "ProfileBanner",
@@ -70,9 +66,16 @@ export default {
     onlineStatus: {
       type: Boolean,
       required: false,
-    }
+    },
   },
-  setup(props) {
+  setup(props, { emit }) {
+    const activeTab = ref('balance'); // Initially "balance" is active tab
+
+    const setActiveTab = (tab) => {
+      activeTab.value = tab;
+      emit('tab-changed', tab); // Use the emit function from setup
+    };
+
     // Determine text color based on gender
     const genderTextColor = computed(() => {
       return props.gender === "Woman" ? "#ff00cc" : props.gender === "Man" ? "#2968ff" : "#999999";
@@ -88,8 +91,9 @@ export default {
       WebkitTextFillColor: "transparent",
     }));
 
-    return {genderTextColor, ProfileTypeTextStyle};
+    return {activeTab, setActiveTab, genderTextColor, ProfileTypeTextStyle};
   },
+  emits: ['tab-changed'],
 };
 </script>
 

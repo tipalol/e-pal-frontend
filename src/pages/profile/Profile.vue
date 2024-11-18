@@ -11,35 +11,46 @@
           :gender="profile.gender"
           :can-edit="profile.isMyProfile"
           :online-status="profile.isOnline"
+          @tab-changed="loadContentBasedOnTab"
       />
     </div>
 
-    <div class="container-fluid flex space-x-8 px-8 py-6 justify-center">
-      <ProfileServices
-          :services="services"
-          :is-my-profile="profile.isMyProfile"
-          @service-selected="fetchServiceOptionsByService"
-          @service-updated ="fetchService"
-      />
 
-      <ServiceDetails
-          :serviceName = "selectedService.name"
-          :serviceDescription = "selectedService.description"
-          :serviceCategoryId = "selectedService.categoryId"
-          :serviceOptions = "serviceOptions"
-          :service-id = "selectedService.id"
-          :is-my-profile = "profile.isMyProfile"
-          @service-option-chosen = onServiceOptionChosen
-          @service-updated ="fetchService"
-          @service-option-updated = "fetchServiceOptionsByService"
+      <div class="container-fluid flex space-x-8 px-8 py-6 justify-center">
 
-      />
+        <ProfileServices
+            :services="services"
+            :is-my-profile="profile.isMyProfile"
+            @service-selected="fetchServiceOptionsByService"
+            @service-updated ="fetchService"
+        />
 
-      <ProfileActions
-          :avatar="profile.avatar"
-          :username="profile.username"
-      />
+        <Balance v-if="activeTab === 'balance'"/>
+
+
+        <ServiceDetails
+            v-if="activeTab === 'services'"
+            :serviceName = "selectedService.name"
+            :serviceDescription = "selectedService.description"
+            :serviceCategoryId = "selectedService.categoryId"
+            :serviceOptions = "serviceOptions"
+            :service-id = "selectedService.id"
+            :is-my-profile = "profile.isMyProfile"
+            @service-option-chosen = onServiceOptionChosen
+            @service-updated ="fetchService"
+            @service-option-updated = "fetchServiceOptionsByService"
+
+        />
+        <ProfileActions
+            :avatar="profile.avatar"
+            :username="profile.username"
+        />
+
+      <!-- другие условия для других вкладок -->
+
     </div>
+
+
   </div>
   <Error v-if="showError.flag"
          button-url="/"
@@ -56,7 +67,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref, reactive } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Header from "../common/header/Header.vue";
 import ProfileBanner from "./components/Banner.vue";
 import ProfileServices from "./components/Services/ProfileServices.vue";
@@ -69,9 +80,10 @@ import axios from "axios";
 import { watch } from 'vue';
 import {useRoute} from "vue-router";
 import * as signalR from '@microsoft/signalr';
+import Balance from "./components/balance/Balance.vue";
 
 export default {
-  components: { OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
+  components: {Balance, OrderModal, Error, ProfileBanner, Header, ProfileServices, ServiceDetails, ProfileActions },
   props: {
     username: {
       type: String,
@@ -82,6 +94,7 @@ export default {
     return {
       showModal: false,
       name: "Profile",
+      activeTab:'services',
       selectedServiceOption: ref({}),
     }
   },
@@ -204,6 +217,10 @@ export default {
     };
   },
   methods: {
+    loadContentBasedOnTab(tab) {
+      this.activeTab = tab;
+      console.log(this.activeTab);
+    },
     onServiceOptionChosen(serviceOption) {
       this.selectedServiceOption.value = serviceOption;
       console.log(this.selectedServiceOption)
