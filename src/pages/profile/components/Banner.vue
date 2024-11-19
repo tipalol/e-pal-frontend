@@ -21,7 +21,8 @@
         <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'album'}" @click="setActiveTab('album')">Album</a>
         <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'wish'}" @click="setActiveTab('wish')">Wish</a>
         <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'feeds'}" @click="setActiveTab('feeds')">Feeds</a>
-        <a href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'balance'}" @click="setActiveTab('balance')">Balance</a>
+
+        <a v-if="canEdit" href="#" class="text-white" :class="{'border-b-2 border-purple-500': activeTab === 'balance'}" @click="setActiveTab('balance')">Balance</a>
       </div>
 
       <!-- Edit Profile Button -->
@@ -69,7 +70,7 @@ export default {
     },
   },
   setup(props, { emit }) {
-    const activeTab = ref('balance'); // Initially "balance" is active tab
+    const activeTab = ref('services'); // Initially "balance" is active tab
 
     const setActiveTab = (tab) => {
       activeTab.value = tab;

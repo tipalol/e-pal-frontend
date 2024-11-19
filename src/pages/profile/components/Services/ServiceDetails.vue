@@ -379,6 +379,8 @@ export default {
     }
   },
   mounted() {
+    this.fetchServiceExtraInfo();
+
   },
   watch: {
     serviceId() {
